@@ -1,0 +1,2854 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage[all]{xy}
+\usepackage{color}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{stmaryrd}
+\usepackage{float}
+\usepackage{enumitem}
+%\usepackage[full]{textcomp}
+%\usepackage{garamondx}
+%\usepackage[scaled=1.01]{zlmtt}
+%\usepackage{sourcesanspro}
+%\usepackage[garamondx,cmbraces]{newtxmath}
+%\useosf
+\makeatletter
+\providecommand{\bigsqcap}{%
+  \mathop{%
+    \mathpalette\@updown\bigsqcup
+  }%
+}
+\newcommand*{\@updown}[2]{%
+  \rotatebox[origin=c]{180}{$\m@th#1#2$}%
+}
+\makeatother
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\makeatletter
+\DeclareRobustCommand{\pns}{\mathrel{\text{$\m@th\proper@ideal$}}}
+\newcommand{\proper@ideal}{%
+  \ooalign{$\lneq$\cr\raise.22ex\hbox{$\lhd$}\cr}%
+}
+\makeatother
+
+\SelectTips{eu}{}
+\setlength{\fboxsep}{0pt}
+\setlength\parskip{0.3em}
+\setlength{\parindent}{0 pt}
+
+\newcommand{\Tr}{\text{Tr}}
+\newcommand{\la}{\left\langle}
+\newcommand{\ra}{\right\rangle}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Hq}{\mathbb{H}}
+\newcommand{\rad}{\text{rad}\,}
+\newcommand{\soc}{\text{soc}\,}
+\newcommand{\spa}{\text{span}}
+\newcommand{\Ann}{\text{Ann}}
+\newcommand{\Fun}{\text{Fun}}
+\newcommand{\End}{\text{End}}
+\newcommand{\Hom}{\text{Hom}}
+\newcommand{\Dic}{\text{Dic}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Syl}{\text{Syl}}
+\newcommand{\orb}{\text{orb}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\stab}{\text{stab}}
+\newcommand{\fix}{\text{fix}}
+\newcommand{\Sym}{\text{Sym}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\supp}{\text{supp}}
+\newcommand{\adj}{\text{adj}\ }
+\newcommand{\lcm}{\text{lcm}\ }
+\newcommand{\id}{\text{id}}
+\newcommand{\im}{\text{im\,}}
+\newcommand{\spanset}{\text{span}}
+\newcommand{\rank}{\text{rank }}
+\newcommand{\Mod}{\text{ mod }}
+
+\theoremstyle{definition}
+
+\newtheorem{defn}{Definition}[subsection]
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{lemma}[defn]{Lemma}
+\newtheorem{coro}[defn]{Corollary}
+\newtheorem{example}[defn]{Example}
+\newtheorem{exe}[defn]{Exercise}
+\newtheorem{claim}[defn]{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem*{notation}{Notation}
+\newtheorem*{conj}{Conjecture}
+
+\title{MA377 Rings and modules :: Lecture notes}
+\author{Lecturer: Dmitriy Rumynin}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\begin{flushright}
+\textit{Week 1, lecture 1 starts here}
+\end{flushright}
+
+\section{Introduction}
+\subsection{Definitions}
+\begin{defn}
+A \textit{ring} is ...
+
+A ring $R$ is \textit{commutative} if $xy=yx \ \forall x,y\in R$.
+
+$R$ is a \textit{division ring} if $(R\backslash\{0\},\cdot)$ is a group.
+
+$R$ is a \textit{field} if it's a commutative division ring.
+\end{defn}
+
+\begin{defn}
+A \textit{left} $R$\textit{-module} is an abelian group $M$ and an action map $R\times M\rightarrow M$ such that $1_Rm=m,\ (x+y)m=xm+ym,\ x(m+n)=xm+xn,\ x(ym)=(xy)m \ \forall m\in M,\ x,y\in R$. A \textit{right} $R$\textit{-module} is similar except the last axiom reads $x(ym)=(yx)m$, also written $(my)x=m(yx)$, with element of $R$ written on the right.
+\end{defn}
+
+\begin{example}
+Each $R$ is a left/right module over itself by left/right multiplication, denoted $_R R$ and $R_R$.
+
+$M_n(R)$ is a ring with usual addition and multiplication of matrices. Column/row vectors form a left/right $M_n(R)$-module.
+\end{example}
+
+\begin{defn}
+A \textit{ring homomorphism} is a function $f:R\rightarrow S$ such that $f(x+y)=f(x)+f(y),\ f(xy)=f(x)f(y),\ f(1_R)=1_S$. An \textit{isomorphism} is a bijective homomorphism.
+\end{defn}
+
+\begin{notation}
+$R\times S:=\{(r,s):r\in R,\ s\in S\}$. This is a ring with the obvious trivial addition and multiplication.
+\end{notation}
+
+\begin{example}
+$i_1:R\rightarrow R\times S:r\mapsto (r,0)$ is not a homomorphism since $i_1(1_R)=(1_R,0_S)\neq (1_R,1_S)=1_{R\times S}$, but it satisfies the first two conditions.
+
+$\pi_1:R\times S\rightarrow R:(r,s)\mapsto r$ is.
+\end{example}
+
+\begin{flushright}
+\textit{Week 1, lecture 2 starts here}
+\end{flushright}
+
+\begin{defn}
+$A\subseteq R$ is a \textit{subring} of $R$ if $A$ is a ring under the same operations, i.e. $1_R\in A,\ xy,x-y\in A \ \forall x,y\in A$.
+\end{defn}
+\begin{example}
+Centre of $R$: $Z(R):=\{x\in R:xy=yx \ \forall y\in R\}$.
+
+Centraliser of $X\subseteq R$ in $R$: $C_R(X):=\{y\in R:xy=yx \ \forall x\in X\}$.
+\end{example}
+
+\begin{defn}
+A left (or right) \textit{ideal} of $R$ is an additive subgroup $L\leq R$ such that $xa \text{ (or }ax\text{)}\in L \ \forall a\in L,x\in R$, denoted $L\unlhd^l R$ or $L\unlhd^r R$. $L$ is a two-sided ideal (or simply ideal) of $R$ if it's both a left and right ideal, denoted $L\unlhd R$.
+
+If $I\unlhd R$ then $R/I=\{x+I:x\in R\}$ is a ring, called the \textit{quotient ring}, with the following definitions:
+\[
+\begin{aligned}
+(x+I)+(y+I)&=(x+y)+I \\
+(x+I)(y+I)&=xy+I \\
+1_{R/I}&=1_R+I
+\end{aligned}
+\]
+\end{defn}
+
+\begin{example}
+For $x_1,\ldots,x_n\in R$, one can generated an ideal
+\[
+(x_1,\ldots,x_n)=Rx_1R+\cdots+Rx_nR=\{r_1x_1s_1+\cdots+r_nx_ns_n:r_i,s_i\in R\}.
+\]
+If $R$ is commutative, then
+\[
+(x_1,\ldots,x_n)=Rx_1+\cdots+Rx_n=\{r_1x_1+\cdots+r_nx_n:r_n\in R\}.
+\]
+\end{example}
+
+\begin{lemma}
+Let $S$ be a ring and $R=M_n(S)$ with $E_{ij}$, a matrix with 1 on the $i,j$ position and 0 elsewhere. Then $(E_{ij})=R$.
+\end{lemma}
+\begin{proof}
+Let $I=(E_{ij})$. One has
+\[
+\begin{aligned}
+E_{RR}=E_{Ri}E_{ij}E_{jR}\in I\\
+1_R=E_{11}+\cdots+E_{nn}\in I \\
+x=x1_R\in I \ \forall x\in R
+\end{aligned}
+\]
+\end{proof}
+
+\begin{defn}
+A \textit{principal ideal domain} is ...
+
+A \textit{unique factorisation domain} is ...
+
+Every PID is a UFD.
+\end{defn}
+
+\begin{lemma}
+\label{lemma:intersectingideals}
+If $R$ is a UFD and $x_1,\ldots,x_n\in R$ with $m=\lcm(x_i)$, then
+\[
+(x_1)\cap \cdots \cap (x_n)=(m).
+\]
+\end{lemma}
+\begin{proof}
+\[
+(x_1)\cap\cdots\cap(x_n)=\{a:x_i\mid a \ \forall i\}=\{a:m\mid a\}=(m).
+\]
+\end{proof}
+
+\begin{lemma}
+If $R$ is a PID and $x_1,\ldots,x_n\in R$ with $d=\gcd(x_1,\ldots,x_n)$, then
+\[
+(x_1)+\cdots+(x_n)=(d).
+\]
+\end{lemma}
+\begin{proof}
+\begin{itemize}
+\item[$\subseteq$:] $d\mid x_i \ \forall i\implies d\mid (a_1x_1+\cdots+a_nx_n)$.
+\item[$\supseteq$:] Since $R$ is a PID, $\exists z\in R:(x_1)+\cdots+(x_n)=(z)$. We want to show $(z)\supseteq (d)\iff z\mid d$. But $(z)\supseteq (x_i)$, so $z\mid x_i\implies z\mid \gcd(x_i)=d$. 
+\end{itemize}
+\end{proof}
+\begin{remark}
+This indeed fails for UFDs. Consider $R=\C[x,y]$, then $\gcd (x,y)=1$, but $(x)+(y)=(x,y)\neq (1)=R$.
+\end{remark}
+
+\begin{thm}[Isomorphism theorems for rings]
+If $f:R\rightarrow S$ is a ring homomorphism, then
+\begin{enumerate}
+\item $\ker f\unlhd R$
+\item $\im f\leq S$
+\item $f$ decomposes as
+\[
+R\twoheadrightarrow R/\ker f \xrightarrow[\overline{f}]{} \im f \hookrightarrow S
+\]
+\end{enumerate}
+\end{thm}
+
+\begin{flushright}
+\textit{Week 1, lecture 3 starts here}
+\end{flushright}
+
+\subsection{Chinese remainder theorem}
+\begin{thm}[Elementary form of Chinese remainder]
+The system
+\[
+\begin{aligned}
+x&\equiv k_1\Mod n_1 \\
+&\vdots \\
+x&\equiv k_t\Mod n_t
+\end{aligned}
+\]
+where $n_1,\ldots,n_t\in\Z$ relatively prime and $k_1,\ldots,k_t\in\Z$, has a solution, and any two solutions differ by a multiple of $n_1\cdots n_t$.
+\end{thm}
+
+\begin{proof}
+Consider
+\[
+\begin{aligned}
+f:\Z&\rightarrow \Z/(n_1)\times\cdots\times\Z/(n_t) \\
+x&\mapsto (x+(n_1),\ldots,x+(n_t)).
+\end{aligned}
+\]
+By Lemma \ref{lemma:intersectingideals}, $\ker f=(n_1)\cap\cdots\cap(n_t)=(n_1\cdots n_t)$. By the isomorphism theorems,
+\[
+\Z/(n_1\cdots n_t)\xrightarrow[\overline{f}]{} \im f\hookrightarrow \Z/(n_1)\times\cdots\times\Z/(n_t),
+\]
+but both $\Z/(n_1\cdots n_t)$ and $\Z/(n_1)\times\cdots\times\Z/(n_t)$ has $|n_1\cdots n_t|$ elements, so it's an isomorphism. Therefore $\exists x\in\Z:f(x)=(k_1,\ldots,k_t)$.
+
+If $y$ is another solution, then $f(x-y)=f(x)-f(y)=0$, i.e. $x-y\in\ker f=(n_1\cdots n_t)$.
+\end{proof}
+
+\begin{example}
+Consider the system
+\[
+\begin{aligned}
+x&\equiv 1\Mod 7 \\
+x&\equiv 7\Mod 9 \\
+x&\equiv 3\Mod 11
+\end{aligned}
+\]
+Note that by $f$ in the proof,
+\[
+\begin{aligned}
+7\times 9=63&\mapsto (0,0,8) \\
+7\times 11=77&\mapsto (0,5,0) \\
+9\times 11=99&\mapsto (1,0,0),
+\end{aligned}
+\]
+and one needs $f(x)=(1,7,3)$, but
+\[
+\begin{aligned}
+(1,7,3)&=(1,0,0)+(0,7,0)+(0,0,3)\\
+&=(1,0,0)+5\times (0,5,0)-(0,0,8) \\
+&=f(99)+5\times f(77)-f(63) \\
+&=f(99+5\times 77-63) \\
+&=f(421).
+\end{aligned}
+\]
+\end{example}
+
+\begin{defn}
+Let $I,J\unlhd R$. $I$ and $J$ are \textit{coprime} if $I+J=R$.
+\end{defn}
+
+\begin{lemma}
+If $I_1,\ldots,I_n\unlhd R$, then
+\[
+\begin{aligned}
+f:R&\rightarrow R/I_1\times\cdots\times R/I_n\\
+x&\mapsto (x+I_1,\ldots,x+I_n)
+\end{aligned}
+\]
+is a ring homomorphism with kernel $I_1\cap\cdots\cap I_n$.
+\end{lemma}
+
+\begin{thm}
+If $I_1,\ldots,I_n$ are pairwise coprime then
+\[
+\overline f:R/(I_1\cap\cdots\cap I_n) \rightarrow R/I_1\times\cdots R/I_n
+\]
+is an isomorphism.
+\end{thm}
+\begin{proof}
+It suffices to find, for each $i,\ a_i\in R:f(a_i)=e_i$, since then $f$ would be surjective:
+\[
+\begin{aligned}
+(x_1+I_1,\ldots,x_n+I_n)&=(x_1+I_1)e_1+\cdots+(x_n+I_n)e_n\\&=f(x_1)f(a_1)+\cdots+f(x_n)f(a_n)=f(x_1a_1+\cdots+x_na_n).
+\end{aligned}
+\]
+Let's now find $a_i$. Note that $\forall j\neq i,\ I_i+I_j=R\ni 1$, so $\exists b_j\in I_i,\ c_j\in I_j:b_j+c_j=1$. We claim $a_i=\prod_{j\neq i} c_j$. Indeed, $c_j=0$ in $I_j$ and 1 in $I_i$.
+\end{proof}
+
+\begin{example}
+In the same example as above, note that $7\times 9\times 11=693$ and we can write
+\[
+28-27=45-44=-21+22=1
+\]
+where $28,-21\in (7),\ -27,45\in(9)$ and $-44,22\in(11)$. Hence
+\[
+\begin{aligned}
+a_1=(-27)(22)=-594&\equiv 99\Mod 693 \\
+a_2=(28)(-44)=-1232&\equiv 154\Mod 693 \\
+a_3=(-21)(45)=-945&\equiv 441\Mod 693
+\end{aligned}
+\]
+\end{example}
+
+\begin{flushright}
+\textit{Week 2, lecture 1 starts here}
+\end{flushright}
+
+\subsection{Isomorphism theorems}
+
+With a left/right $R$-module we can convert $R$ into its opposite $R^\text{op}$ by swapping the multiplication. Then a right $R$-module is a left $R^\text{op}$-module, and vice versa.
+
+\begin{defn}
+For a $R$-module $_RM$, $N\leq M$ is a \textit{submodule} if it's an abelian subgroup and $\forall r\in R,x\in N:rx\in N$.
+
+Note for $_RR$ and $R_R$, submodules are precisely left/right ideals.
+\end{defn}
+
+\begin{defn}
+For $_RM\geq _RN$, the abelian quotient group $M/N$ is called the \textit{quotient module}, with multiplication defined $r(x+N)=rx+N$. This is well-defined since
+\[
+\begin{aligned}
+x+N=y+N&\implies x-y\in N
+\\&\implies r(x+N)=rx+N=r(y+(x-y))N=ry+r(x-y)+N=ry+N=r(y+N).
+\end{aligned}
+\]
+Other axioms follow from those for $_RM$.
+\end{defn}
+
+\begin{example}
+If $L\unlhd R$ then $R/L$ is a left $R$-module.
+\end{example}
+
+\begin{defn}
+A \textit{homomorphism} of $R$-modules $\varphi: _RM \rightarrow _RN$ is a homomorphism of abelian groups and $\varphi(rm)=r\varphi(m) \ \forall r\in R, m\in M$.
+
+For left $R$-modules, we write homomorphism on the right: $(rm)\varphi=r(m\varphi)=rm\varphi$ to keep in line with the can-get-rid-of-bracket perspective of associativity. For right $R$-modules we then simply write $\varphi(mr)=\varphi(m)r=\varphi mr$.
+\end{defn}
+
+\begin{thm}[1st isomorphism theorem]
+If $R$-modules $\varphi:_RM\rightarrow _RN$ is a homomorphism of modules, then
+\begin{enumerate}
+\item $\ker\varphi\leq _RM$
+\item $\im\varphi\leq _RN$
+\item $\varphi$ decomposes as
+\[
+\begin{aligned}
+M&\overset{\pi}\twoheadrightarrow M/\ker\varphi &\xrightarrow[\overline\varphi]{\cong} \im\varphi&\overset{\iota}\hookrightarrow N \\
+m&\mapsto m+\ker\varphi &\mapsto m\varphi \\
+&& x&\mapsto x
+\end{aligned}
+\]
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+All statements hold on the level of abelian groups by isomorphism theorems for groups. It remains to see the $R$-module structure through.
+\begin{enumerate}
+\item Let $m\in\ker\varphi,\ r\in R$. Then $(rm)\varphi=r(m\varphi)=r 0_M=0_M$, so $rm\in\ker\varphi$, so indeed $\ker\varphi\leq _RM$.
+\item Let $x\in\im\varphi,\ r\in R$. Then $\exists m\in M:m\varphi=x$. Then $rx=r(m\varphi)=(rm)\varphi\in\im\varphi$, so indeed $\ker\varphi\leq _RN$.
+\item We need to check all 3 maps are homomorphism of $R$-modules.
+\begin{itemize}
+\item $(rm)\pi=rm+\ker\varphi=r(m+\ker\varphi)=r(m\pi)$.
+\item $(r(m+\ker\varphi))\overline\varphi=(rm+\ker\varphi)\overline\varphi=(rm)\varphi=r(m\varphi)=r((m+\ker\varphi)\overline\varphi)$.
+\item $(rx)\iota=rx=r(x\iota)$.
+\end{itemize}
+\end{enumerate}
+\end{proof}
+
+\begin{prop}[2nd isomorphism theorem]
+If $_RM,K\leq _RN$ then
+\[
+\frac{M+K}{M}\cong \frac{K}{M\cap K}.
+\]
+\end{prop}
+
+\begin{prop}[3rd isomorphism theorem]
+If $_RK\leq _RM\leq _RN$ then
+\[
+\frac{N/K}{M/K}\cong \frac{N}{M}.
+\]
+\end{prop}
+
+\begin{prop}[Correspondence theorem]
+Let $_RM\leq _RN$. Denote the set of all submodules of $N$ by $S(N)$ and the set of all submodules of $N$ containing $M$ by $S(N,M)$. Then
+\[
+\begin{aligned}
+\pi:N&\rightarrow N/M\\
+n&\mapsto n+m
+\end{aligned}
+\]
+gives a bijection
+\[
+\begin{aligned}
+S(N,M) &\leftrightarrow S(N/M)\\
+_RM \leq _RA \leq _RN &\mapsto \pi(A)\\
+\pi^{-1}(B) &\mapsfrom _RB\leq _R N/M
+\end{aligned}
+\]
+\end{prop}
+
+\begin{notation}
+$\Hom(_RM,_RN)=\{\text{homomorphisms }\varphi:M\rightarrow N\}$. This is an abelian group.
+
+$\End_RM=\{\text{homomorphisms }\varphi:M\rightarrow M\}$. This is a ring.
+\end{notation}
+
+\begin{flushright}
+\textit{Week 2, lecture 2 starts here}
+\end{flushright}
+
+\begin{example}
+Let $R$ be a (noncommutative) ring, $A=M_a(R),\ B=M_b(R)$, two rings and $V=R^{a\times b}$, which is just an abelian group. Then $_AV$ is a left module and $V_B$ is a right module, and there's no natural choice for $V$ to be a right $A$-module or a left $B$-module.
+
+Now consider $E=\End_AV$. Our convention turns $V$ into a right $E$-module, and there is a ring homomorphism
+\[
+\begin{aligned}
+\varphi:B&\rightarrow E \\
+y&\mapsto (\gamma\mapsto\gamma y)
+\end{aligned}
+\]
+Similarly, if $F=\End V_B$ then $V$ is a left $F$-module and there is a ring homomorphism $\psi:A\rightarrow F$. In fact they are isomorphisms, the proof is left as an exercise.
+\end{example}
+
+\begin{lemma}[The $a=b=1$ special case]
+\label{lemma:EndRRisoR}
+$\End _RR\cong R$.
+\end{lemma}
+\begin{proof}
+Consider
+\[
+\begin{aligned}
+\varphi:R&\rightarrow\End_RR\\
+x&\mapsto \varphi_x:r\mapsto rx
+\end{aligned}
+\]
+$\varphi$ is well-defined since $\varphi_x$ is well-defined. Also, $(sr)\varphi_x=srx=s(r\varphi_x)$, so indeed $\varphi_x\in\End_RR$. Also, $r\varphi_{x+y}=r(x+y)=rx+ry=r\varphi_x+r\varphi_y=r(\varphi_x+\varphi_y)$, $r\varphi_{xy}=rxy=(r\varphi_x)\varphi_y=r(\varphi_x\varphi_y)$, and $r\varphi_{1_R}=r1=r=r 1_{\End_RR}$, so $\varphi$ is indeed a homomorphism.
+
+Suppose $\varphi_x=0$, i.e. $r\varphi_x=0 \ \forall r\in R$. Then for $r=1,\ 0=1\varphi_x=1x=x$, so $\ker\varphi=\{0\}$, i.e. $\varphi$ is injective.
+
+Now pick $f\in\End_RR$ and let $x=1_Rf$. Then $\forall r\in R,\ r\varphi_x=rx=r1_Rf=rf$. So $f=\varphi_x$, and $\varphi$ is surjective.
+\end{proof}
+
+\section{Basis}
+\subsection{Free module}
+\begin{notation}
+Let $_RM$ be a left module and $X$ a subset of $M$. Then
+\[
+\Fun(X,M):=\{\text{functions }X\rightarrow M\}.
+\]
+This is a left $R$-module, with a submodule
+\[
+\Fun_f(X,M):=\{f:f(x)=0 \ \forall \text{ but finitely many } x\in X\}.
+\]
+\end{notation}
+
+\begin{defn}
+A subset $X\subseteq _RM$ \textit{spans} $M$ if $\forall m\in M$,
+\[
+\exists f\in\Fun_f(X,R):m=\sum_{a\in X}f(a)a.
+\]
+
+$X$ is linearly independent if $\forall f\in\Fun_F(X,R)$,
+\[
+\sum_{a\in X} f(a)a=0\implies f(a)=0\forall a\in X.
+\]
+
+$X$ is a \textit{basis} for $M$ if it spans $M$ and is linearly independent.
+\end{defn}
+
+\begin{defn}
+$_RM$ is \textit{free} if it admits a basis.
+\end{defn}
+
+\begin{example}
+\begin{enumerate}
+\item Let $R=\Z$ and $M=\Z/n\Z$. Then $\{1+n\Z\}$ spans $M$ but $M$ is not free, since $nx=0 \ \forall x\in M$.
+\item $\varnothing\subseteq M$ is linearly independent for any $M$, since $\Fun(\varnothing,R)$ only has one element $\widehat{\varnothing}$ which is identically zero, and summing over nothing gives zero.
+\item Let $R$ be a ring, $M=_RR$, and $X=\{a\}$. Then
+\[
+\begin{aligned}
+X\text{ is linearly independent } &\iff (ba=0\implies b=0)\\
+X\text{ spans } _RR &\iff (\exists b:ba=1_R)
+\end{aligned}
+\]
+\end{enumerate}
+\end{example}
+
+\begin{flushright}
+\textit{Week 2, lecture 3 starts here}
+\end{flushright}
+
+\begin{lemma}
+$\forall$ set $X$ and $\forall R,\ \exists $ a free $R$-module $M$ with a basis of cardinality $|X|$.
+\end{lemma}
+
+\begin{proof}
+Let $M=\Fun_f(X,_RR)$. Then $\forall a\in X,\ \delta_a\in M$ where $\delta_a(b):=\left\{\begin{aligned}
+  1_R \qquad &a=b \\ 0_R \qquad &a\neq b
+\end{aligned} \right. .$ This gives us a basis. Indeed,
+\begin{itemize}
+\item For $f\in M$, list all $x_1,\ldots,x_n\in X:f(x_1)\neq 0_R$. Then
+\[
+f=f(x_1)\delta_{x_1}+\cdots+f(x_n)\delta_{x_n}.
+\]
+So it spans $M$.
+\item If $r_1\delta_{x_1}+\cdots+r_n\delta_{x_n}=0_M$ then
+\[
+0_R=(r_1\delta_{x_1}+\cdots+r_n\delta_{x_n})(x_i)=r_i\delta_{x_i}(x_i)=r_i \ \forall i,
+\]
+so $\{\delta_{x_1},\ldots,\delta_{x_n}\}$ is linearly independent.
+\end{itemize}
+\end{proof}
+
+\begin{lemma}
+Every $_RM$ is isomorphic to a quotient of a free module.
+\end{lemma}
+\begin{proof}
+Pick $M\subseteq M$ that spans $M$ (e.g. $X=M$). Then
+\[
+\begin{aligned}
+\varphi:\Fun_F(X,R)&\rightarrow M \\
+f&\mapsto \sum_{a\in X}f(a)a
+\end{aligned}
+\]
+is surjective. By lemma above, $\Fun_F(X,R)$ is free, and by 1st isomorphism theorem,
+\[
+M\cong \Fun_f(X,R) / \ker\varphi.
+\]
+\end{proof}
+
+\begin{defn}
+A \textit{partially ordered set} (or \textit{poset}) is denoted $(\mathcal P,\preceq)$ where $\preceq$ can be viewed as a subset of $\mathcal P\times\mathcal P$. If $(x,y)\in\preceq$ we denote it as $x\preceq y$. The $\preceq$ satisfies that it's reflexive, antisymmetric ($x\preceq y,y\preceq x\implies x=y$) and transitive.
+
+A partial order $\preceq$ is \textit{linear order} if $\forall x,y\in\mathcal P$, either $x\preceq y$ or $y\preceq x$.
+
+A \textit{chain} is a subset $X\subset\mathcal P$ such that $(X,\preceq)$ is a linearly ordered set.
+
+$a\in\mathcal P$ is a \textit{maximal element} if $\forall b\in P,\ a\preceq b\implies a=b$.
+
+$a\in\mathcal P$ is an \textit{upper bound} of a chain $X$ if $\forall b\in X,\ b\preceq a$.
+\end{defn}
+
+\begin{lemma}[Zorn's]
+Let $\mathcal P$ be a nonempty poset. If every chain in $\mathcal P$ has an upper bound then $\mathcal P$ contains a maximal element.
+\end{lemma}
+
+\begin{thm}
+\label{thm:modoverdivringisfree}
+Let $D$ be a division ring and $_DM$ a module. Then
+\begin{enumerate}
+\item $M$ is free
+\item $\forall \text{ linearly independent } X\subseteq M,\ \exists \text{ basis }B\supseteq X$
+\item $\forall \text{ spanning } Q\subseteq M,\ \exists \text{ basis }B\subseteq Q$
+\end{enumerate}
+\end{thm}
+\begin{proof}
+\begin{enumerate}
+\item This follows from 2 by taking $X=\varnothing$.
+\item Consider poset $\mathcal P=\{Z\subseteq M:Z\supseteq X\text{ and }Z\text{ is linearly independent}\}$ with $\preceq{}={}\subseteq$. Then $X\in\mathcal P$. Pick a chain $C\subseteq\mathcal P$ and consider $Z=\bigcup_{Y\in C}Y$. If $Z\in\mathcal P$ then it's obviously an upper bound of $C$. Now by construction, $Z\supseteq X$. Now if $a_1,\ldots,a_n\in Z$, clearly $\exists Y\in C:a_i\in Y$, so $r_1a_1+\cdots+r_na_n=0_M$ would imply $a_i=0$. Thus, by Zorn's lemma, there is a maximal element $Z\in\mathcal P$. We claim $Z$ spans $M$, and therefore is a basis. Suppose for contradiction $\exists a\in M:a\notin\spa(Z)$. Then $\{a\}\cap Z\supsetneqq Z$ and is linearly independent. Indeed, if
+\[
+ra+\underbrace{r_1a_1+\cdots r_na_n}_{\in Z}=0\text{ and }r\neq 0,
+\]
+then $a\in\spa(Z)$, a contradiction, so $r=0$ and $r_1a_1+\cdots r_na_n=0$. Since $Z$ is linearly independent, $a_i=0$. So $\{a\}\cap Z\in\mathcal P$, contradicting maximality of $Z$.
+
+\begin{flushright}
+\textit{Week 3, lecture 1 starts here}
+\end{flushright}
+
+\item Consider poset $\mathcal P=\{Z\subseteq M:Z\subseteq Q\text{ and }Z\text{ is linear independent}\}$ with $\preceq{}={}\subseteq$. It's nonempty since $\varnothing\in\mathcal P$. Similarly to above, a chain $C$ in $\mathcal P$ has an upper bound $X=\bigcup_{A\in C} A$, which spans $M$ by the same argument.
+\end{enumerate}
+\end{proof}
+
+\subsection{Embark on Artin–Wedderburn theory}
+\begin{defn}
+$_RM$ is \textit{simple} if $M\neq 0$ and $\forall _RN \leq {} _RM$, either $N=0$ or $N=M$. i.e. Simple modules have exactly two submodules.
+\end{defn}
+\begin{example}
+\begin{enumerate}
+\item $\Z/m\Z$ as a $\Z$-module is simple iff $m$ is prime.
+\item $_RR$ is simple iff $R$ is a division ring.
+\begin{proof}
+\begin{itemize}
+\item[$\Leftarrow:$] Let $_RL\leq {} _RR$ such that $_RL\neq 0$. Then $\forall 0\neq x\in L,\ 1_R=x^{-1}x\in L$, so $r=r\cdot 1_R\in L \ \forall r\in R$, i.e. $L=R$.
+\item[$\implies:$] Let $x\in R,\ x\neq 0$. Then $Rx=\{rx:r\in R\}\unlhd^l R$, so $_R Rx\leq {} _RR$, and since $Rx\neq 0$ and $_RR$ is simple, one has $Rx=R$, and since $1_R\in R,\ \exists y\in R:yx=1$. Similarly, $Ry=R$ so $\exists z\in R:zy=1$, so $x=(zy)x=z(yx)=z$ and $y$ is both left and right inverse of $x$.
+\end{itemize}
+\end{proof}
+\end{enumerate}
+\end{example}
+
+\begin{notation}
+$\mathcal L(R)=\{L:L\unlhd^l R\}$. This is a poset under $\subseteq$. Maximal left ideal is then a maximal element in $(\mathcal L(R)\backslash\{R\})$ and minimal left ideal is a minimal element in $(\mathcal L(R)\backslash\{0\})$.
+\end{notation}
+
+\begin{lemma}
+\label{lemma:LmaxiffRLsimple}
+$L\unlhd^l R$ is maximal iff $R/L$ is a simple left $R$-module.
+\end{lemma}
+\begin{proof}
+By correspondence theorem,
+\[
+\{L,R\}=\{M:L\subsetneqq M\unlhd^l R\} \leftrightarrow \text{nonzero submodules of }R/L.
+\]
+\end{proof}
+
+\begin{remark}
+Given $_RM\ni m$, we have a homomorphism of $R$-modules $\varphi_m:{}_RR\rightarrow M:r\mapsto rm$. Indeed, $\varphi_m(sr)=srm=s\varphi_m(r)$. We call the kernel $\ker\varphi_m=\{x\in R:xm=0\}$ the \textit{annihilator} of $m$, denoted $\Ann(m)$. 1st isomorphism theorem says $\Ann(m)\unlhd^l R$, and $\im\varphi_m=Rm\cong R/\Ann(m)$.
+\end{remark}
+
+\begin{lemma}
+\label{lemma:MisoRAnnx}
+If $_RM$ is simple with $x\in M,\ x\neq 0$, then $\Ann(x)$ is a maximal left ideal and $M\cong R/\Ann(x)$.
+\end{lemma}
+\begin{proof}
+One has $x\in \im\varphi_x$, so $\im\varphi_x\neq 0$. By simplicity of $M,\ \im\varphi_x=M.\ M\cong R/\Ann(x)$ then follows from 1st isomorphism theorem. Maximality of $\Ann(x)$ follows from correspondence theorem.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 3, lecture 2 starts here}
+\end{flushright}
+
+\begin{thm}
+\label{thm:n0ringshavemaxleftideal}
+A nonzero ring has a maximal left ideal.
+\end{thm}
+\begin{proof}
+Let $R$ be a nonzero ring and consider poset $\mathcal P=\{L\lhd^l R:L\neq R\}$ with $\preceq{}={}\subseteq$. One has $0\in\mathcal P$ so $\mathcal P\neq\varnothing$. Let $C\subseteq\mathcal P$ be a chain. Define $I=\bigcup_{L\in C}L$. Clearly $I$ is an additive abelian subgroup, since for $x,y\in I$ then $x\in L_1$ and $y\in L_2$, but $C$ is chain so WLOG $L_1\supseteq L_2$, so $x,y\in L_1\implies x-y\in L_1\implies x-y\in I$. We claim $I$ is in fact a left ideal. Indeed, for $x\in I$, one knows $x\in L\in C$, and $\forall r\in R,\ rx\in L$, so $rx\in I$. Note that $I\neq R$ since $1_R\notin L \ \forall L\in C$. Therefore $I$ is an upper bound for $C$, and by Zorn's lemma $\mathcal P$ has a maximal element $J$, which by definition is a maximal left ideal.
+\end{proof}
+
+\begin{coro}
+\label{coro:non0ringsadmitsimpmod}
+A nonzero ring admits a simple module.
+\end{coro}
+\begin{proof}
+Let $I\lhd^l R$ be a maximal ideal of a nonzero ring $R$, which is guaranteed by theorem above. Then $R/I$ is a simple $R$-module by \ref{lemma:LmaxiffRLsimple}.
+\end{proof}
+
+\begin{prop}[Schur lemma I]
+If $\varphi: {} _RM\rightarrow {} _RN$ is a homomorphism of simple modules, then either $\varphi=0$ or $\varphi$ is an isomorphism.
+\end{prop}
+\begin{proof}
+Note $\ker\varphi\leq {}_RM$ and $\im\varphi\leq {}_RN$. By simplicity, $\ker\varphi\in\{0,M\}$ and $\im\varphi\in\{0,N\}$, i.e. there are 4 possible cases.
+\begin{itemize}
+\item[$(0,0)$] This is impossible, since $\im\varphi=0\implies\ker\varphi=M$.
+\item[$(0,N)$] This implies precisely $\varphi$ is an isomorphism.
+\item[$(M,0)$] It follows $\varphi=0$.
+\item[$(M,N)$] This is impossible, since $\ker\varphi=M\implies\im\varphi=0$.
+\end{itemize}
+\end{proof}
+
+\begin{coro}[Schur lemma II]
+\label{coro:schurlem2}
+If $_RM$ is simple then $\End_RM$ is a division ring.
+\end{coro}
+\begin{proof}
+By Schur lemma I, if $_RM$ is simple then every $\varphi\in\End_RM=\{\text{homomorphisms }\varphi:{}_RM\rightarrow{}_RM\}$ either is $0$ or has an inverse.
+\end{proof}
+
+\begin{example}
+$R=\R[x],\ M=\R^2,\ X=\begin{pmatrix}1&-1\\1&1\end{pmatrix}.\ M$ is an $R$-module with $f(x)v:=f(X)v$. Consider a submodule $N\leq M$, then for $\forall\alpha\in R,\ \alpha 1\in R$, so $\alpha N\subseteq N$, hence $N$ is a vector subspace. But $\dim N=1$ is impossible, so $M$ is simple. Suppose it is, then $\forall v\in N:v\neq 0,\ xv=\alpha v$, i.e. $v$ is an eigenvector of $X$, which has no real eigenvalues, an absurdity. Now we have $\End_RM$ is a division ring, and note that
+\[
+\begin{aligned}
+\End_RM&=\{f:M\rightarrow M:f(xv)=xf(v)\}=\{Y\in M_2(\R):XY=YX\}=C_{M_2(\R)}(X)\\
+&=\left\{aI+\frac12 b X^2:a,b\in\R\right\}\cong\C \text{ via } X\mapsto 1+i.
+\end{aligned}
+\]
+\end{example}
+
+\begin{thm}[baby Artin–Wedderburn]
+The following are equivalent for a nonzero ring $R$.
+\begin{enumerate}
+\item Every left $R$-module is free.
+\item $R$ is a division ring.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+\begin{itemize}
+\item[2$\Rightarrow$1:] This is Theorem \ref{thm:modoverdivringisfree}.1.
+\item[1$\Rightarrow$2:] By Corollary \ref{coro:non0ringsadmitsimpmod}, $\exists$ a simple $R$-module $M$, which is free by assumption, i.e. admits a basis $B\subseteq M$. Pick $x\in B$, then $Rx\leq M$ by simplicity has to be $M$, so $M=Rx\cong R/\Ann(x)$ by Lemma \ref{lemma:MisoRAnnx}. But $rx=0_M\implies r=0_R$ since $x$ is in a basis, so $\Ann(x)=0$, hence by Lemma \ref{lemma:EndRRisoR}, $M\cong R\cong \End_RR\cong\End_RM$ which is a division ring by \ref{coro:schurlem2}.
+\end{itemize}
+\end{proof}
+
+\begin{flushright}
+\textit{Week 3, lecture 3 starts here}
+\end{flushright}
+
+\subsection{Algebra}
+\begin{defn}
+An \textit{algebra} is a pair $(A,\F)$ where $A$ is a ring and a $\F$-vector space such that
+\begin{enumerate}
+\item $\underbrace{x+y}_{\text{in ring}}=\underbrace{x+y}_{\text{in vector space}} \ \forall x,y\in A$
+\item $(\alpha x)y=\alpha(xy)=x(\alpha y) \ \forall x,y\in A,\alpha\in\F$
+\end{enumerate}
+\end{defn}
+
+\begin{remark}
+Notions about a ring are extended to algebras like so:
+\begin{itemize}
+\item An ideal of $(A,\F)$ is an ideal of $A$ that is also an $\F$-vector subspace
+\item A subalgebra of $(A,\F)$ is a subring of $R$ that is also an $\F$-vector subspace
+\item A homomorphism $(A,\F)\rightarrow (B,\F)$ is a ring homomorphism $A\rightarrow B$ with $\F$-linearity
+\item A module over $(A,\F)$ is a module over $A$ with the action being $\F$-linear
+\item A submodule of a module over $(A,\F)$ is a submodule of the module over $A$ and a $\F$-vector subspace
+\item A homomorphism of modules over $(A,\F)$ is a module homomorphism with $\F$-linearity
+\end{itemize}
+\end{remark}
+
+\begin{lemma}
+Let $R$ be a ring and $\F$ a field. Then there is a bijection
+\[
+\{\text{algebras }(R,\F)\} \leftrightarrow \{\text{ring homomorphisms }\F\rightarrow Z(R)\}.
+\]
+\end{lemma}
+\begin{proof}
+For an algebra $(R,\F)$, define $\varphi:\F\rightarrow Z(R):\alpha\mapsto\alpha1_R$. (Verify this is indeed a ring homomorphism.) Then by definition, $(\alpha 1_R)x=\alpha x=\alpha (x1)=x(\alpha 1_R) \ \forall x\in R$, so $\im\varphi\subseteq Z(R)$.
+
+For a ring homomorphism $\varphi:\F\rightarrow Z(R)$, define $\F\times R\rightarrow R:(\alpha,x)\mapsto \varphi(\alpha)x=:\alpha x$. Then $(\alpha\beta)(x)=\varphi(\alpha\beta)x=\varphi(\alpha)(\varphi(\beta)x)=\alpha(\beta x)$ (verify similar statements for $(\alpha+\beta)(x)$ and $\alpha(x+y)$) and $\alpha(xy)=\varphi(\alpha)xy=(\varphi(\alpha)x)y=(\alpha x)y$ and since $\varphi(\alpha)\in Z(R)$ it's also $x(\alpha y)$.
+
+It remains to verify they are indeed inverse bijections:
+\[
+\begin{aligned}
+&\quad \ (R,\F)\\
+&\rightarrow\varphi:\F\rightarrow Z(R):\alpha\mapsto\alpha 1_R\\
+&\rightarrow \alpha x:=\varphi(\alpha)x=\alpha 1_R x=\alpha x
+\end{aligned}
+\]
+and
+\[
+\begin{aligned}
+&\quad \ \varphi:\F\rightarrow Z(R)\\
+&\rightarrow \alpha x:=\varphi(\alpha)x\\
+&\rightarrow \varphi(\alpha)=\alpha 1_R=\varphi(\alpha)\cdot 1=\varphi(\alpha).
+\end{aligned}
+\]
+\end{proof}
+
+\begin{remark}
+\begin{enumerate}
+\item By the structure of a field, the following ring things are automatically algebra things: ideals, modules, submodules, module homomorphisms (ingredients in 1st isomorphism theorem). e.g. Suppose $M$ is a module over algebra $(A,\F)$ and $N$ is a submodule of $M$ for the ring $A$. Then $\forall\alpha\in\F,\ n\in N,\ \alpha n=(\alpha 1_A) n\in N$ since $\alpha 1_A\in Z(A)$. So $N$ is a subspace and hence a submodule of the algebra $(A,\F)$.
+\item Subrings and ring homomorphisms are different. Consider the algebra $(\C,\Q)$, then $\Z[i]\leq \C$ is not a subalgebra. Also, for the algebra $A=(\C,\C),\ \varphi:A\rightarrow A:x\mapsto\overline{x}$ is a ring homomorphism $\C\rightarrow \C$ but not an algebra homomorphism since it's not $\C$-linear.
+\end{enumerate}
+\end{remark}
+
+\begin{defn}
+Let $(A,\F)$ be an algebra with a $\F$-basis of $A\ e_1,\ldots,e_n$. Then one can write $\forall i,j=1,\ldots,n$
+\[
+e_i\cdot e_j=\sum_k c_{ij}^k e_k,
+\]
+where $c_{ij}^k\in\F$, called \textit{structure constants}, determine and are determined by the algebra structure of $(A,\F)$.
+\end{defn}
+\begin{example}
+\label{example:quaternionsstructureconstants}
+The quaternions $\Hq=\R^4$ with basis $1,i,j,k$ has the structure constants table:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|cccc}
+    & 1   & $i$  & $j$  & $k$  \\ \hline
+1   & 1   & $i$  & $j$  & $k$  \\
+$i$ & $i$ & $-1$ & $k$  & $-j$ \\
+$j$ & $j$ & $-k$ & $-1$ & $i$  \\
+$k$ & $k$ & $j$  & $-i$ & $-1$
+\end{tabular}
+\end{table}
+\end{example}
+
+\begin{flushright}
+\textit{Week 4, lecture 1 starts here}
+\end{flushright}
+
+\subsubsection{Polynomial}
+
+The video recording was completely black! See notes given by Dmitriy. The following is the best I can manage:
+
+\begin{prop}
+\label{prop:dimFXcountable}
+If $n\geq 1$ then $\dim_\F \F\la x_1,\ldots,x_n\ra$ is countable.
+\end{prop}
+
+\begin{prop}[Universal property]
+Let $(A,\F)$ be an algebra. Then $\forall a_1,\ldots,a_n\in A,\ \exists!$ homomorphism of algebras $\varphi:\F\la x_1,\ldots,x_n\ra\rightarrow A:\varphi(x_i)=a_i \ \forall i$.
+\end{prop}
+\begin{proof}
+Define $\varphi$ by $x_1\cdots x_n\mapsto a_1\cdots a_n$ and extend by $\F$-linearity, so that it's an algebra homomorphism. Suppose $\psi:\F\la x_1,\ldots,x_n\ra\rightarrow A$ is another such homomorphism, then $\varphi(x_i)=\psi(x_i)=a_i$ and by properties of homomorphism and linearity they must then be the same map.
+\end{proof}
+
+\subsubsection{Noncommutative Nullstellensatz}
+\begin{defn}
+Let $(A,\F)$ be an algebra with $\alpha\in A$. Consider the algebra homomorphism $\varphi_\alpha:\F[x]\rightarrow A:x\mapsto\alpha$. Since $\F[x]$ is a PID, $\ker f$ is generated by one element $\mu_\alpha(x)$, called the \textit{minimal polynomial} of $\alpha$. One says $\alpha$ is \textit{transcendental} if $\mu_\alpha\equiv 0$ and \textit{algebraic} if $\mu_\alpha\not\equiv 0$.
+\end{defn}
+\begin{example}
+$A=M_n(\F)\ni\alpha$, then all $\alpha$ are algebraic by Cayley–Hamilton theorem.
+
+If $\dim_\F A<\infty$ then $1,\alpha,\alpha^2,\ldots$ are linearly dependent, so all $\alpha$ are algebraic.
+\end{example}
+
+\begin{lemma}
+\label{lemma:minpolofdivalgelemisirred}
+If $(D,\F)$ is a division algebra, then $\forall\alpha\in D\backslash\{0\},\ \mu_\alpha(x)\in\F[x]$ is irreducible.
+\end{lemma}
+\begin{proof}
+Suppose $\mu_\alpha(x)=g(x)h(x)$ with $0<\deg g<\deg \mu_\alpha$, but then since $\mu_\alpha(\alpha)=0$ and $D$ is a division ring, WLOG $g(\alpha)=0$, contradicting minimality of $\mu_\alpha$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 4, lecture 2 starts here}
+\end{flushright}
+
+\begin{thm}[Amitsur–Schur lemma]
+\label{thm:Amitsur-Schur}
+If $(A,\F)$ is an algebra with $\dim_\F A < |\F|$ and $M$ is simple $A$-module, then any $d\in D=\End_A M$ (also an $\F$ algebra) is algebraic over $\F$.
+\end{thm}
+\begin{proof}
+Note that $\dim_\F D\leq \dim_\F M\leq \dim_\F A <|\F|$. Indeed, since $M$ is simple, $\forall m\in M,m\neq 0,\ M\cong A/\Ann(m)$ (Lemma \ref{lemma:MisoRAnnx}), so $\dim_\F M\leq \dim_\F A$; now pick $m\in M,m\neq 0$ and consider $\alpha_m:D\rightarrow M:x\mapsto mx$. This is injective: suppose $\alpha_m(x)=0$, but $M=Am$ by simplicity, so $\forall \widetilde m\in M,\ \exists a\in A:\widetilde m=am$. Then $\widetilde m x=a(mx)=a\alpha_m(x)=0$, so $x=0_D$.
+
+Now let $d\in D$. Note $\F=\F 1_D\leq Z(D)$, and if $d\in\F$ then $d=\alpha 1_D$ for some $\alpha\in\F$, so minimal polynomial of $d$ is simply $z-\alpha$, hence algebraic. Suppose now $d\notin\F$. Then $d-\alpha\notin\F \ \forall\alpha\in\F$. This implies $(d-\alpha)=\frac{1}{d-\alpha}$ are linearly dependent over $\F$, hence $\exists \gamma_1,\ldots,\gamma_n$ all $\neq 0$ such that
+\[
+\gamma_1 \frac{1}{d-\alpha_1}+\cdots+\gamma_n \frac{1}{d-\alpha_n}=0.
+\]
+Now note that $\alpha_i\in\F$, so all $(d-\alpha_i)$ commute, hence $(d-\alpha_i)^{-1}$ commute as well, since
+\[
+xy=yx\implies y=x^{-1}xy=x^{-1}yx\implies yx^{-1}=x^{-1}yxx^{-1}=x^{-1}y
+\]
+and doing the same trick for $y$ one yields $x^{-1}y^{-1}=y^{-1}x^{-1}$. We can therefore multiply $(d-\alpha_1)(d-\alpha_2)\cdots(d-\alpha_n)$ on both sides and get
+\[
+\gamma_1 (d-\alpha_2)\cdots(d-\alpha_n)+\gamma_2(d-\alpha_1)(d-\alpha_3)\cdots(d-\alpha_n)+\cdots+\gamma_n(d-\alpha_1)\cdots(d-\alpha_{n-1})=0.
+\]
+In other words, if we let
+\[
+f(z)=\sum_{i=1}^n \gamma_i \frac{\prod_{k=1}^n (z-\alpha_k)}{z-\alpha_i}
+\]
+then $f(d)=0$. One has $d$ is algebraic as long as $f\neq 0$. And indeed $f\neq 0$, since
+\[
+f(\alpha_1)=\gamma_1(\alpha_1-\alpha_2)(\alpha_1-\alpha_3)\cdots(\alpha_1-\alpha_n)\neq 0.
+\]
+\end{proof}
+
+\begin{coro}[Noncommutative Nullstellensatz]
+If $(A,\C)$ is an algebra with $A$ finitely generated and $M$ is a simple $A$-module, then $\End_AM=\C$.
+\end{coro}
+\begin{proof}
+Suppose $A$ is generated by $a_1,\ldots,a_n$. Then $\C\la x_1,\ldots,x_n\ra\rightarrow A:x_i\mapsto a_i$ is surjective. By \ref{prop:dimFXcountable}, $\dim_\C A$ is at most countable, so by theorem above, any $d\in\End_AM$ is algebraic over $\C$ and let $f_d(z)\in \C[z]$ be its minimal polynomial. By \ref{lemma:minpolofdivalgelemisirred}, it's irreducible, but since $\C$ is algebraically closed, $f_d(z)$ must be of the form $\alpha z-\beta$ where $\alpha\neq 0$. It follows that $d\in\C$.
+\end{proof}
+
+\begin{coro}[Weak Nullstellensatz]
+Let $I\lhd \C[x_1,\ldots,x_n]$ be a proper ideal. Then $\exists (a_i)\in\C^n:\forall f\in I,\ f(a_1,\ldots,a_n)=0$.
+\end{coro}
+\begin{proof}
+Adapt proof of Theorem \ref{thm:n0ringshavemaxleftideal} with $\mathcal P$ now being the poset of all left ideals $J\unlhd R$ such that $J\supseteq I$ and $J\neq R$. The maximal element $L$ the argument produces gives a simple $\C[x_1,\ldots,x_n]$-module $M=\C[x_1,\ldots,x_n]/L$ (\ref{lemma:LmaxiffRLsimple}). Now each $x_i$ defines $\widehat{x_i}:f+L\mapsto x_if+L\in \End_{\C[x_1,\ldots,x_n]}M$, and by corollary above, $\End_{\C[x_1,\ldots,x_n]}M=\C$, so let $\widehat{x_i}=a_i\in\C$. Let $h(x_1,\ldots,x_n)\in I\subseteq L$ and consider $\widehat{h}:f+L\mapsto hf+L$. Since $h\in L,\ \widehat h$ is identically zero, i.e. $\widehat h=0$, but on the other hand,
+\[
+\widehat h=h(\widehat{x_1},\ldots,\widehat{x_n})=h(a_1,\ldots,a_n)\in\C,
+\]
+the desired is thus proven.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 4, lecture 3 starts here}
+\end{flushright}
+
+\section{Division}
+\subsection{Quaternion}
+By writing down the fundamental formula for quaternions $i^2=j^2=k^2=ijk=-1$, Sir William Rowan Hamilton defined, in modern language, the quotient algebra
+\[
+\Hq=\R\la x_1,x_2,x_3\ra/I\text{ where }I=\left(1+x_1^2,1+x_2^2,1+x_3^2,1+x_1x_2x_3\right),
+\]
+and $i,j,k$ are then $x_1+I,\ x_2+I,\ x_3+I$.
+
+\begin{prop}
+Products of $i,j,k$ are as the table in \ref{example:quaternionsstructureconstants}.
+\end{prop}
+\begin{proof}
+The diagonal is immediate from the formula. Now
+\[
+\begin{aligned}
+-i=-iijk=-jk \quad &\implies \quad jk=i\\
+-k=ijkk=-ij \quad &\implies \quad ij=k
+\end{aligned}
+\]
+and similarly for the rest.
+\end{proof}
+
+\begin{prop}
+$1,i,j,k$ is a basis for $(\Hq,\R)$.
+\end{prop}
+\begin{proof}
+Clearly $1,i,j,k$ generate $\Hq$ and any product is a linear combination of $1,i,j,k$. It remains to show they are linearly independent. Consider an algebra homomorphism $f:\R\la x_1,x_2,x_3\ra\rightarrow M_2(\C)$ given by
+\[
+\begin{aligned}
+x_1 &\mapsto \begin{pmatrix}i&0\\0&-i\end{pmatrix}=A_1 \\
+x_2 &\mapsto \begin{pmatrix}0&1\\-1&0\end{pmatrix}=A_2 \\
+x_3 &\mapsto \begin{pmatrix}0&i\\i&0\end{pmatrix}=A_3.
+\end{aligned}
+\]
+We claim $I\subseteq \ker f$. Indeed $A_1^2=A_2^2=A_3^2=-1_{M_2(\C)}$ so $1+x_i^2\in\ker f$, and $A_1A_2A_3=-1_{M_2(\C)}$ so $1+x_1x_2x_3\in\ker f$. Hence $\overline f:\Hq\rightarrow M_2(\C)$ given by $i\mapsto A_1,j\mapsto A_2,k\mapsto A_3$ is a well-defined algebra homomorphism. Since $I,A_1,A_2,A_3$ are linearly independent over $\R$, so are $1,i,j,k$.
+\end{proof}
+
+\subsubsection{Quaternions form a division ring}
+\begin{defn}
+Similar to complex numbers, quaternions can be divided into their \textit{real part} and \textit{imaginary part}, i.e. one can write $X=\alpha+x$ where $\alpha\in\R$ and $x\in\spa(i,j,k)=\Hq_0$. \textit{Conjugation} is defined similarly as well: $X^\ast:=\alpha-x$, e.g. $(3+5i-77j)^\ast=3-5i+77j$. One also has
+\[
+\Re X=\frac{q+q^\ast}2,\qquad \Im X=\frac{q-q^\ast}2.
+\]
+Define and notate the \textit{norm} as $q(X)=XX^\ast$. Notate the usual Euclidean distance by $||x||=\sqrt{q(x)}$.
+\end{defn}
+
+\begin{thm}
+If $\alpha,\beta\in\R$ and $x,y\in\Hq_0$ then
+\[
+(\alpha+x)(\beta+y)=\underbrace{\alpha\beta-x\cdot y}_{\in\R}+\underbrace{\alpha y+\beta x+x\times y}_{\in\Hq_0}.
+\]
+\end{thm}
+\begin{proof}
+One has
+\[
+(\alpha+x)(\beta+y)=\alpha\beta+\alpha y+\beta x+xy,
+\]
+so it remains to show $xy=x\times y-x\cdot y$. Write $x=\alpha i+\beta j+\gamma k$ and $y=\widehat\alpha i+\widehat\beta j+\widehat\gamma k$, then
+\[
+\begin{aligned}
+xy&=-(\alpha\widehat\alpha+\beta\widehat\beta+\gamma\widehat\gamma)+(\beta\widehat\gamma-\widehat\beta\gamma)i+(\gamma\widehat\alpha-\alpha\widehat\gamma)j+(\alpha\widehat\beta-\beta\widehat\alpha)k\\&=-x\cdot y+x\times y.
+\end{aligned}
+\]
+\end{proof}
+
+\begin{coro}
+$q(X)=q(\alpha+\beta i+\gamma j+\delta k)=\alpha^2+\beta^2+\gamma^2+\delta^2$.
+\end{coro}
+\begin{proof}
+Write $X=\alpha+\nu$. Then by definition,
+\[
+q(X)=(\alpha+\nu)(\alpha-\nu)=\alpha^2-\nu\cdot(-\nu)-\alpha\nu+\alpha\nu-\nu\times\nu=\alpha^2+\nu\cdot\nu,
+\]
+which is what's desired.
+\end{proof}
+
+\begin{coro}
+$(qp)^\ast=p^\ast q^\ast$.
+\end{coro}
+\begin{proof}
+Write $p=\alpha+x$ and $q=\beta+y$. Then
+\[
+(qp)^\ast=(\alpha\beta-x\cdot y+\beta x+\alpha y+y\times x)^\ast=\alpha\beta-x\cdot y-\beta x-\alpha y-y\times x
+\]
+and
+\[
+(\alpha-x)(\beta-y)=\alpha\beta-(-x)\cdot (-y)-\alpha y-\beta x +(-x)\times (-y),
+\]
+the desired then follows from $(-x)\times (-y)=-y\times x=x\times y$ (the other parts don't care about orders).
+\end{proof}
+
+\begin{coro}
+$||pq||=||p||||q||$.
+\end{coro}
+\begin{proof}
+$||pq||=(pq)(pq)^\ast=pqq^\ast p^\ast=p||q||p^\ast=pp^\ast||q||=||p||||q||$.
+\end{proof}
+
+\begin{prop}
+$\Hq$ is a division algebra.
+\end{prop}
+\begin{proof}
+Let $q\in\Hq,\ q\neq 0$. Then $||q||\neq 0$, and since $qq^\ast=||q||$, one has $q^{-1}=\frac{1}{||q||}q^\ast$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 5, lecture 1 starts here}
+\end{flushright}
+
+\subsubsection{Multiplicative group of quaternions}
+
+The group $\Hq^\times=(\Hq\backslash\{0\},\cdot)$ has subgroups $\R_+^\times=\{\alpha:\alpha>0\}$ and $U(\Hq)=\{x\in\Hq:||x||=1\}$ (the 3-sphere).
+
+\begin{prop}[Polar representation of quaternions]
+$\Hq^\times\cong \R_+^\times\times U(\Hq)$.
+\end{prop}
+\begin{proof}
+Define $f(\alpha,X)=\alpha X$. This is a group homomorphism:
+\[
+f((\alpha,X),(\beta,Y))=f(\alpha\beta,XY)=\alpha\beta XY=\alpha X\beta Y=f(\alpha,X)f(\beta,Y).
+\]
+
+$f$ is injective: indeed, let $(\alpha,X)\in\ker f$. Then $\alpha X=1$ and $X=\alpha^{-1}\in\R$, and since $||x||=1,\ x=\pm 1$, but $\alpha>0$, so $(\alpha,X)=(1,1)$.
+
+$f$ is surjective: indeed, pick $X\in\Hq^\times$ and one can write $X=||X||\cdot ||X||^{-1}X$ where $||X||\in\R_+$ and $||||X||^{-1}X||=||X||^{-1}||X||=1$, i.e. $||X||^{-1}X\in U(\Hq)$.
+\end{proof}
+
+\begin{prop}
+For $X\in\Hq^\times$, the following hold:
+\begin{enumerate}
+\item $X^2\in\R\iff X\in \R\cup\Hq_0$
+\item $X^2\in\R_{>0}\iff X\in\R$
+\item $X^2\in\R_{<0}\iff X\in\Hq_0$
+\item $|X|=2\iff X=-1$
+\item $|X|=4\iff X\in\Hq_0$ and $||X||=1$
+\end{enumerate}
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+\item Write $X=\alpha+x$. Then $X^2=(\alpha^2-x\cdot x)+2\alpha x+\underbrace{x\times x}_0$, hence $\Im X=2\alpha x$, so $\Im X=0\iff\alpha=0$ or $x=0\iff X\in\Hq_0$ or $X\in\R$.
+\item[2, 3.] Now suppose $X\in\R\cup\Hq_0$, then $X^2=\alpha^2-x\cdot x$. Note $\alpha=0$ or $x=0$. So $X^2>0\iff x=0\iff X\in\R$ and $X^2<0\iff \alpha=0\iff X\in\Hq_0$.
+\item[4.] $X^2=1\iff x=0$ and $\alpha^2=1$, so $\alpha=\pm 1$, but $|1|=1$ so $\alpha=-1$.
+\item[5.] By above, $|X|=4\implies X^2=-1$ and this is equivalent to $\alpha=0$ and $||x||=1$.
+\end{enumerate}
+\end{proof}
+
+\begin{prop}[Quaternionic Euler formula]
+Write $X=\alpha+\beta x$ where $\alpha,\beta\in\R$ and $x\in U(\Hq)\cap\Hq_0$. Then
+\[
+e^X=e^\alpha(\cos\beta+x\sin\beta).
+\]
+\end{prop}
+
+\begin{prop}[de Moivre's formula]
+If $x\in\Hq_0\cap U(\Hq)$ and $n\in\N$ then
+\[
+(\cos\alpha+x\sin\alpha)^n=\cos n\alpha+x\sin n\alpha
+\]
+\end{prop}
+\begin{proof}
+$(e^{\alpha x})^n=e^{n\alpha x}$.
+\end{proof}
+
+\subsubsection{Orthogonal matrix and transformation}
+Recall that for $\begin{pmatrix}c_1&\cdots&c_n\end{pmatrix}=A\in\R^{n\times n}$, the following are equivalent:
+\begin{enumerate}
+\item $A^TA=I_n$
+\item $c_1,\ldots,c_n$ is an orthonormal basis
+\item $x\mapsto Ax$ preserves dot product, i.e. $(Ax)\cdot(Ay)=x\cdot y \ \forall x,y\in\R^n$
+\item $x\mapsto Ax$ preserves distances, i.e. $||Ax||=||x|| \ \forall x\in\R^n$
+\end{enumerate}
+
+We are going to see that $\C$ gives nice description of orthogonal transformations on $\R^2$ and $\Hq$ gives these of those on $\R^3$ and $\R^4$. Specifically, a unit vector $v_\alpha=\begin{pmatrix}\cos\alpha\\ \sin\alpha\end{pmatrix}$ (which can also be described as a complex number) determines two orthogonal transformations of $\R^2$: $R_{\alpha}=\begin{pmatrix}v_{\alpha} & v_{\alpha+\pi/2}\end{pmatrix}=\begin{pmatrix}\cos\alpha&-\sin\alpha\\ \sin\alpha&\cos\alpha\end{pmatrix}$ and $S_{\alpha}=\begin{pmatrix}v_{\alpha} & v_{\alpha-\pi/2}\end{pmatrix}=\begin{pmatrix}\cos\alpha&\sin\alpha\\\sin\alpha&-\cos\alpha\end{pmatrix}$ which have determinants $\pm 1$ respectively.
+
+\begin{prop}
+$\{S_\alpha,R_\alpha:\alpha\in\R\}$ is precisely the set of $2\times 2$ orthogonal matrices.
+\end{prop}
+
+\begin{prop}
+Rotations on $\R^2$ are given by left multiplication of $z\in\C,\ ||z||=1$.
+\end{prop}
+\begin{proof}
+This is clear by writing such $z$ as $\cos\alpha+i\sin\alpha$.
+\end{proof}
+
+\subsubsection{3D rotation}
+To specify a 3D rotation, we need a directional axis and an angle and use Euler's angle-axis notation $R_{(\alpha,v)}$.
+
+\begin{flushright}
+\textit{Week 5, lecture 2 starts here}
+\end{flushright}
+
+\begin{lemma}
+\label{lemma:formsofmonicirred}
+If $f\in\R[x]$ is monic and irreducible, then either $f(x)-x-\alpha$ or $x^2+\alpha x+\beta$ with $\mathcal D=\alpha^2-4\beta<0$.
+\end{lemma}
+\begin{proof}
+One has $\exists\lambda\in\C:f(\lambda)=0$. If $\lambda\in\R$, then $(x-\lambda)\mid f$ so $f=x-\lambda$ by irreducibility. If $\lambda\notin\R$, then $f(\overline\lambda)=0$ and $(x-\lambda)(x-\overline\lambda)\mid f(x)$ where $(x-\lambda)(x-\overline\lambda)=x^2+\alpha x+\beta$ with $\mathcal D<0$ and again by irreducibility $f(x)=x^2+\alpha x+\beta$.
+\end{proof}
+
+\begin{coro}
+Let $V_\R$ be a vector space with $\dim_\R V$ odd and $L:V\rightarrow V$ a linear operator. Then $L$ admits a real eigenvalue.
+\end{coro}
+\begin{proof}
+Write the characteristic polynomial $\chi_L(z)$ of $L$ as $\pm f_1,\ldots,f_n$ where $f_i$ are all monic and irreducible, but $\deg\chi$ is odd, so there must be one $f_i=x-\alpha$, where $\alpha$ is the desired eigenvalue.
+\end{proof}
+
+Recall Sylvester's theorem from MA251.
+
+\begin{lemma}
+\label{lemma:SOmatrixform}
+If $L:\R^3\rightarrow\R^3$ is special orthogonal ($\det L=1$), then $\exists$ orthonormal basis in which the matrix of $L$ is
+\[
+\begin{pmatrix}
+1 & 0 & 0 \\
+0 & \cos\alpha & -\sin\alpha \\
+0 & \sin\alpha & \cos\alpha
+\end{pmatrix}.
+\]
+\end{lemma}
+\begin{proof}
+$L$ admits eigenvalue $\alpha\in\R$ by previous lemma, so $Lx=\alpha x$ for some $x\in\R^3\backslash\{0\}$. Since $||x||=||Lx||=|a|||x||,\ \alpha=\pm 1$. Now $Lx^\perp\subseteq x^\perp$. Indeed, let $y\in x^\perp$, then $x\cdot y=0$, and $0=x\cdot y=Lx\cdot Ly=\pm x\cdot Ly$, so $Ly\in x^\perp$. Consider the two cases.
+\begin{enumerate}
+\item $\alpha=1$, then $L|_{x^\perp}:x^\perp\rightarrow x^\perp$ is orthogonal of $\det=1$, so $L|_{x^\perp}=R_\alpha$ and in an orthonormal basis $\frac{1}{||x||}x,y,z,\ L$ has the desired form.
+\item $\alpha=-1$, then $L|_{x^\perp}:x^\perp\rightarrow x^\perp$ is orthogonal of $\det=-1$, so $L|_{x^\perp}$ is reflection $\begin{pmatrix}1&0\\0&-1\end{pmatrix}$ and one has orthonormal basis $y,\frac{1}{||x||}x,z$ such that
+\[
+L=\begin{pmatrix}1&0&0\\0&-1&0\\0&0&-1\end{pmatrix}
+\]
+where $\begin{pmatrix}-1&0\\0&-1\end{pmatrix}=R_\pi$.
+\end{enumerate}
+\end{proof}
+
+We now bring quaternions in by identifying $\R^3\cong\Hq_0\ni x$ and rotation as $R_{x,\alpha}$.
+
+\begin{lemma}
+\label{lemma:rotatebyconjugate}
+$\forall w\in\Hq_0,$
+\[
+R_{x,\alpha}(w)=e^{\frac{\alpha}{2}x}we^{-\frac{\alpha}{2}x}.
+\]
+\end{lemma}
+\begin{proof}
+Pick any $y:x\cdot y=0$ and $||y||=1$. Define $z:=x\times y$. Then $x,y,z$ behave exactly like $i,j,k$, so it suffices to check the lemma on the basis $x,y,z$. Now a priori one has
+\[
+R_{x,\alpha}(x)=x,\quad R_{x,\alpha}(y)=y\cos\alpha+z\sin\alpha,\quad R_{x,\alpha}(z)=-y\sin\alpha+z\cos\alpha,
+\]
+and let's check the case for $z$:
+\[
+\begin{aligned}
+e^{\frac{\alpha}{2}x}ze^{-\frac{\alpha}{2}x}&=\left(\cos\frac{\alpha}{2}+x\sin\frac{\alpha}{2}\right)z\left(\cos\frac{\alpha}{2}-x\sin\frac{\alpha}{2}\right)\\
+&=\left(z\cos\frac{\alpha}{2}-y\sin\frac{\alpha}{2}\right)\left(\cos\frac{\alpha}{2}-x\sin\frac{\alpha}{2}\right)\\
+&=z\cos^2\frac{\alpha}{2}-y\cos\frac{\alpha}{2}\sin\frac{\alpha}{2}-y\sin\frac{\alpha}{2}\cos\frac{\alpha}{2}-z\sin^2\frac{\alpha}{2}\\
+&=z\left(\cos^2\frac{\alpha}{2}-\sin^2\frac{\alpha}{2}\right)-2y\cos\frac{\alpha}{2}\sin\frac{\alpha}{2}\\
+&=z\cos\alpha-y\sin\alpha.
+\end{aligned}
+\]
+The remaining two are left as enjoyment.
+\end{proof}
+
+\begin{thm}
+\[
+\begin{aligned}
+\varphi:U(\Hq)&\rightarrow SO(\Hq_0)\cong SO_3(\R)\\
+x&\mapsto (z\mapsto xzx^{-1})
+\end{aligned}
+\]
+is a surjective 2-to-1 group homomorphism.
+\end{thm}
+\begin{proof}
+Check $\varphi$ is indeed a group homomorphism:
+\begin{itemize}
+\item $\varphi(x)\in SO(\Hq_0)$ since $||xzx^{-1}||=||x||||z||||x^{-1}||=||z||\ \forall z\in\Hq_0$.
+\item $\varphi(xy)(z)=(xy)z(xy)^{-1}=x(yzy^{-1})x^{-1}=\varphi(x)(\varphi(y)(z))$.
+\end{itemize}
+
+Now \ref{lemma:SOmatrixform} says $L=R_{x,\alpha}$ and \ref{lemma:rotatebyconjugate} says $L=\varphi\left(e^{\frac{\alpha}{2}x}\right)\in\im\varphi$, so $\varphi$ is surjective.
+
+If $x\in\ker\varphi$ then $xzx^{-1}=z$, i.e. $z\in Z(\Hq)=\R$ so $z=\pm 1$, hence in particular $|\ker\varphi|=2$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 5, lecture 3 starts here}
+\end{flushright}
+
+\subsubsection{4D scroll}
+Rotations in 4D can be understood by identifying $\R^4\cong\Hq$. For $x\in U(\Hq)$, define $L_x:z\mapsto xz$ and $R_x:z\mapsto zx$, called \textit{left scroll} and \textit{right scroll}, which are clearly orthogonal. They are also special orthogonal (see Lemma 3.1.19 in Dmitriy's notes). Analogously,
+\begin{thm}
+\[
+\begin{aligned}
+\varphi:U(\Hq)\times&\rightarrow SO(\Hq)\cong SO_4(\R)\\
+(x,y)&\mapsto L_xR_{y^{-1}}
+\end{aligned}
+\]
+is a surjective 2-to-1 group homomorphism.
+\end{thm}
+
+\begin{example}
+Consider $f:1\mapsto i\mapsto j\mapsto k\mapsto -1\in SO(\Hq)$. Write it in the form as in previous theorem:
+\begin{enumerate}
+\item We need to fix 1 by \[
+L_{-i}f:1\mapsto (-i)i=1,\ i\mapsto (-i)j=-k,\ j\mapsto (-i)k=j,\ k\mapsto (-i)(-1)=i.
+\]
+\item Identify the axis of $L_{-i}f|_{\Hq_0}$, i.e. the vector that's fixed, which in this case is $j$.
+\item Find the angle: let $(k,i,j)\cong(x,y,z)$ be the positively oriented basis in $\R^3$ and one can see it's a rotation by $\pi/2$, hence
+\[
+L_{-i}f(w)=e^{\frac{\pi}{4}j}we^{-\frac{\pi}{4}j},\quad \text{ i.e. }L_{-i}f=L_{e^{\frac{\pi}{4}j}}R_{e^{-\frac{\pi}{4}j}}
+\]
+\item Assemble:
+\[
+f=L_i L_{e^{\frac{\pi}{4}j}} R_{e^{-\frac{\pi}{4}j}}=L_{ie^{\frac{\pi}{4}j}} R_{e^{-\frac{\pi}{4}j}},
+\]
+where $ie^{\frac{\pi}{4}j}=i\left(\frac{1}{\sqrt 2}+\frac{1}{\sqrt 2}j\right)=\frac{1}{\sqrt 2}i+\frac{1}{\sqrt 2}k$ and $e^{-\frac{\pi}{4}j}=\frac{1}{\sqrt 2}-\frac{1}{\sqrt 2}j$. Let's check this on $j$:
+\[
+\begin{aligned}
+\left(\frac{1}{\sqrt 2}i+\frac{1}{\sqrt 2}k\right)j\left(\frac{1}{\sqrt 2}-\frac{1}{\sqrt 2}j\right)&=\frac12 (i+k)(j+1)\\
+&=\frac12 (ij+i+kj+k)=\frac12(k+i-i+k)=k.
+\end{aligned}
+\]
+\end{enumerate}
+\end{example}
+
+\subsection{Division algebra over $\R,\C$}
+\begin{prop}
+\label{prop:CisonlyfindimdivalgoverC}
+$\C$ is the only finite dimensional division algebra over $\C$.
+\end{prop}
+\begin{proof}
+Let $D$ be such algebra and $a\in D$. Lemma \ref{lemma:minpolofdivalgelemisirred} says $\mu_a(z)\in\C[z]$ is irreducible, but then $\mu_a(z)=z-\alpha$ where $\alpha\in\C$, so $a\in\C$.
+\end{proof}
+
+\begin{prop}
+\label{prop:odddimdivalgoverRisR}
+If $D$ is a division algebra over $\R$ and $\dim_\R D$ is odd, then $D=\R$.
+\end{prop}
+\begin{proof}
+Pick $a\in D$, and left multiplication $L_\alpha:D\rightarrow D$ admits a real eigenvalue $\alpha$, so $L_a(x)=\alpha x$ for some $x\in D,\ x\neq 0$, but then $ax=\alpha x\implies (a-\alpha)x=0\implies a-\alpha=(a-\alpha)xx^{-1}=0x^{-1}=0$, so $a=\alpha\in\R$.
+\end{proof}
+
+\begin{defn}
+For a finite dimensional algebra $(A,\F)$, define the \textit{(algebraic) trace} as
+\[
+\Tr_A:A\rightarrow\F:a\mapsto\Tr(L_a),
+\]
+the trace of matrix of left multiplication.
+\end{defn}
+\begin{example}
+$x+yi\in\C$, then $(x+yi)1=x+yi$ and $(x+yi)i=-y+xi$, so in the basis $1,i,\ L_{x+yi}$ is given by $\begin{pmatrix}x&-y\\y&x\end{pmatrix}$, so $\Tr_\C(x+iy)=2x$.
+
+Similarly $\Tr_\Hq(\alpha+x)=4\alpha$.
+\end{example}
+
+\begin{lemma}
+If $(A,\F)$ is a finite dimensional algebra, then
+\begin{enumerate}
+\item $\Tr_A:A\rightarrow\F$ is a linear map
+\item $\Tr_A(\alpha1_A)=\alpha\dim_\F A \ \forall\alpha\in\F$
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+\begin{enumerate}
+\item This is clear after writing $\Tr_A:A\rightarrow\End_\F A\rightarrow\F$ where the two arrow are linear
+\item Also trivial since $L_\alpha=\alpha \ \id_A$.
+\end{enumerate}
+\end{proof}
+
+\begin{coro}
+$A=\F\oplus A_0$ where $A_0:=\ker\Tr_A$.
+\end{coro}
+
+\begin{lemma}
+If $a\in A$ then $\mu_a(z)$ is the minimal polynomial of $L_a$.
+\end{lemma}
+\begin{proof}
+Note that
+\[
+L_{a^n}(x)=a^nx=\underbrace{a\cdots a}_n x=(L_a)^n(x),
+\]
+so for any polynomial $f(z),\ f(L_a)=L_{f(a)}$. Now
+\[
+f(a)=0\implies f(L_a)=L_0=0
+\]
+and
+\[
+f(L_a)=0\implies 0=f(L_a)(1_A)=L_{f(a)}=f(a)1=f(a),
+\]
+so $L_a$ and $a$ satisfy the same polynomials.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 6, lecture 1 starts here}
+\end{flushright}
+
+\begin{lemma}
+Let $D$ be a finite division algebra over $\R$ and $a\in D_0=\ker\Tr_D$. Then $a^2\in\R,\ a^2\leq 0$ and $a^2=0\iff a=0$.
+\end{lemma}
+\begin{proof}
+\begin{enumerate}
+\item By \ref{lemma:formsofmonicirred} and \ref{lemma:minpolofdivalgelemisirred}, the minimal polynomial of $a$ is $\mu_a(x)=x^2+\alpha x+\beta$ with $\mathcal D=\alpha^2-4\beta <0$. Also $\mu_a=\mu_{L_a}$, where $L_a:D\rightarrow D$ is a linear map with eigenvalues the roots of $\mu_a(x)$ and $\chi_{L_a}(x)=\mu_a(x)^{\frac12\dim D}$. Denote $n=\dim D$ (which is even), then one can write
+\[
+\chi_{L_a}(x)=x^n-\Tr(L_a)x^{n-1}+\cdots=x^n+\frac{n}{2}dx^{n-1}+\cdots,
+\]
+so $-\Tr(L_a)=\frac{n}{2}\alpha$. But $\Tr(L_a)=\Tr_D(a)=0$ since $a\in D_0$. It follows $\alpha=0,\ a^2+\beta=0$ and $-4\beta=\mathcal D\leq 0$, so $a^2=-\beta\in\R$ and $a^2\leq 0$.
+\item Obvious since $D$ is a division ring.
+\end{enumerate}
+\end{proof}
+
+\begin{defn}
+Equip $D_0$ with euclidean form
+\[
+\begin{aligned}
+q:D_0&\rightarrow\R\\
+a&\mapsto -a^2\geq 0
+\end{aligned}
+\]
+and
+\[
+\begin{aligned}
+\tau:D_0\times D_0&\rightarrow\R\\
+(a,b)&\mapsto \frac12 \left(q(a+b)-q(a)-q(b)\right)\\
+&=\frac12\left(-(a+b)^2+a^2+b^2\right)=-\frac12(ab+ba)
+\end{aligned}
+\]
+\end{defn}
+
+\begin{lemma}
+$(D_0,\tau)$ is a finite dimensional euclidean space.
+\end{lemma}
+\begin{proof}
+Note $\tau(a,b)=-\frac12(ab+ba)$ is symmetric bilinear and
+\[
+a\neq 0\implies \tau(a,a)=q(a)=-a^2\in\R_{>0}.
+\]
+\end{proof}
+
+\begin{lemma}
+If $e_1,\ldots,e_n$ is an orthonormal basis of $D_0$ then $e_i^2=-1$ and if $i\neq j$ then $e_ie_j=-e_je_i$.
+\end{lemma}
+\begin{proof}
+First note $e_i^2=-q(e_i)=-1$. Then
+\[
+0=\tau(e_i,e_j)=-\frac12(e_ie_j+e_je_i),
+\]
+so $e_ie_j=-e_je_i$.
+\end{proof}
+
+\begin{coro}
+Suppose $i<j<k$, then $e_k=\pm (e_ie_j)^{-1}$.
+\end{coro}
+\begin{proof}
+Let $u=e_ie_je_k$, then $u^2=e_ie_j\underbrace{e_ke_i}_{-e_ie_k}\underbrace{e_je_k}_{-e_ke_j}=\underbrace{e_ie_j}_{-e_je_i}e_i\underbrace{e_ke_k}_{-1}e_j=e_je_ie_ie_j=-e_je_j=1$. Then $u^2-1=(u-1)(u+1)=0$, and since $D$ is division, $u=\pm 1$, i.e. $e_ie_je_k=\pm 1$, which gives the desired after rearranging.
+\end{proof}
+
+\begin{thm}[Frobenius]
+\label{thm:frobenius}
+A finite dimensional division algebra over $\R$ is isomorphic to $\R,\C$ or $\Hq$.
+\end{thm}
+\begin{proof}
+Consider values of $n=\dim_\R D$.
+\begin{enumerate}
+\item $n=1$, then $D=\R$.
+\item $n=2$, then $e_1$ is a basis of $D_0$ with $e_1^2=-1$, so $D\cong\C$ via $i\mapsto e_1$.
+\item $n=3$, then $D=\R$ by \ref{prop:odddimdivalgoverRisR}.
+\item $n=4$, then $e_1,e_2,e_3$ is a basis of $D_0$, so $D\cong\Hq$ via $i\mapsto e_1,j\mapsto e_2,k\mapsto e_1e_2$.
+\item $n\geq 5$, then $\exists e_1,e_2,e_3,e_4$, but $e_3=\pm(e_1e_2)^{-1}$ and $e_4=\pm(e_1e_2)^{-1}$, so $e_3=\pm e_4$, contradicting linear independence of a basis.
+\end{enumerate}
+\end{proof}
+
+\begin{thm}
+\label{thm:countableFrobenius}
+A countably generated division algebra over $\R$ is isomorphic to $\R,\C$ or $\Hq$.
+\end{thm}
+\begin{proof}
+Consider such $D$. The Amitsur trick (\ref{thm:Amitsur-Schur}) tells us any $d\in D$ is algebraic over $\R$. But since $D$ is division, $\forall d\in D\backslash\R,\ \mu_d(x)=x^2+\alpha x+\beta$ with $\mathcal D<0$ again by \ref{lemma:formsofmonicirred} and \ref{lemma:minpolofdivalgelemisirred}. So now suppose $D\neq\R$ and pick $a\in D\backslash\R$, then $a^2=-\alpha_a a-\beta_a$, so $\R(a)\cong\C$. If $\R(a)=D$ we are done, so suppose $\R(a)\neq D$ and pick $b\in D\backslash \R(a)$. One has
+\[
+\mu_{a+b}(x)=(a+b)^2+\alpha_{a+b}(a+b)+\beta_{a+b}=a^2+ab+ba+b^2+\cdots=0,
+\]
+so
+\[
+ba=-\left(a^2+b^2+ab+\alpha_{a+b}(a+b)+\beta_{a+b}\right).
+\]
+This implies $\R\la a,b\ra$, the subalgebra generated by $a,b$, is spanned by $1,a,b,ab$, so
+\[
+3\leq\dim\R\la a,b\ra\leq 4,
+\]
+but $\R\la a,b\ra$ is a division algebra since $\forall d\in D,$
+\[
+d^{-1}=\beta_d^{-1}(d+\alpha_d),
+\]
+so $\R\la a,b\ra=\Hq$ by Frobenius. If $\R\la a,b\ra =D$ we are done, so pick $c\in D\backslash \R\la a,b\ra$ and consider $\R\la a,b,c\ra$. Similarly, it is division and is spanned by $1,a,b,c,ab,bc,ac$, so
+\[
+5\leq \dim \R\la a,b,c\ra \leq 7,
+\]
+contradicting Frobenius.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 6, lecture 2 starts here}
+\end{flushright}
+
+\subsection{Finite division ring}
+\begin{prop}
+\label{prop:ImaxiffRqIfield}
+If $R$ is a commutative ring and $I\unlhd R$ then $I$ is maximal iff $R/I$ is a field.
+\end{prop}
+\begin{proof}
+\begin{itemize}
+\item[$\Rightarrow$] Pick $0\neq x+I\in R/I$, then $x\notin I$ and $J:=Rx+I\supsetneqq I$, so maximality of $I$ tells us $J=R\ni 1$, i.e. $\exists y\in R,z\in I:1=xy+z$, but then $1+I=(x+I)(y+I)$, hence $y+I$ is the inverse of $x+I$.
+\item[$\Leftarrow$] It follows $0$ and $R/I$ are the only ideals and in particular they are the only $R$-submodules of $R/I$. Correspondence theorem gives us a bijection between submodules of $R/I$ and submodules of $R$ containing $I$. Hence there are only two submodules of $R$ containing $I$ and they can only be $R$ and $I$, which is equivalent to that $I$ is maximal.
+\end{itemize}
+\end{proof}
+
+\begin{coro}
+\label{coro:TFAErirredImaxRqIfield}
+If $R$ is a PID and $I=(r)\unlhd R$, then the following are equivalent:
+\begin{enumerate}
+\item $r$ is irreducible
+\item $I$ is maximal
+\item $R/I$ is a field 
+\end{enumerate}
+\end{coro}
+\begin{proof}
+\begin{itemize}
+\item $2\iff 3$: This is \ref{prop:ImaxiffRqIfield}.
+\item $2\implies 1$: We write $r=xy$ and we want to show $x$ or $y$ is a unit. Note $(x)$ contains $I$, so by maximality either
+\begin{enumerate}
+\item $(x)=R\ni 1$, hence $\exists z\in R:xz=1$ so $x$ is a unit; or
+\item $(x)=I\ni r$, hence $\exists z:x=rz$ so $r=xy=rzy$ and since $R$ is a domain $zy=1$ so $y$ is a unit
+\end{enumerate}
+\item $1\implies 2$: Pick $J\unlhd R:J\supseteq I$. Then $J=(x)\ni r$, so $\exists y:r=xy$. Since $r$ is irreducible, either
+\begin{enumerate}
+\item $x$ is a unit, hence $J=R$.
+\item $y$ is a unit, hence $x=ry^{-1}$ so $J=(x)=(r)=I$.
+\end{enumerate}
+\end{itemize}
+\end{proof}
+Recall that if $\F$ is a field then $\F[x]$ is a PID and $R=\F[x]/I$ where $I=(f(x))$ is a field iff $f$ is irreducible.
+\begin{lemma}
+If $\F$ is a field and $\deg f=n$ then for any $z\in\F[x]/(f(x)),$
+\[
+\exists! h(x)\in\F[x]_{\leq n-1}:z=h+I.
+\]
+\end{lemma}
+\begin{proof}
+Write $z=g(x)+I$, then $g(x)=q(x)f(x)+r(x)$ where $\deg r\leq n-1$, so $z=r+I$. Now suppose $z=r+I=s+I$, then $r-s\in I$ with $\deg (r-s)\leq n-1$, so $r-s=0\implies r=s$.
+\end{proof}
+
+\begin{example}
+Consider $A=\Q[x]/I$ where $I=(x^3-2x^2+1)$. By Eisenstein's criterion $x^3-2x^2+2$ is irreducible, so $A$ is a field. $x^3$ is now $2x^2-2$ and by previous lemma $1,x,x^2$ is a $\Q$-basis of $A$. For example,
+\[
+(x+1)^3=x^3+3x^2+3x+1=2x^2-2+3x^2+3x+1=5x^2+3x-1,
+\]
+\[
+x^4=x(2x^2-2)=2x^3-2x=2(2x^2-2)-2x=4x^2-2x-4,
+\]
+\[
+x^5=x(4x^2-2x-4)=4x^3-2x^2-4x=4(2x^2-2)-2x^4-4x=6x^2-4x-8,
+\]
+and
+\[
+x^6=x^3x^3=(2x^2-2)^2=\cdots
+\]
+In general, one has the multiplication table
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|ccc}
+      & $1$   & $x$      & $x^2$       \\ \hline
+$1$   & $1$   & $x$      & $x^2$       \\
+$x$   & $x$   & $x^2$    & $2x^2-2$    \\
+$x^2$ & $x^2$ & $2x^2-2$ & $4x^2-2x-4$
+\end{tabular}
+\end{table}
+\end{example}
+
+and the left multiplication by $x$ and $x^2$ are
+\[
+L_x=\begin{pmatrix}
+0&0&-2\\1&0&0\\0&1&2
+\end{pmatrix},\qquad
+L_{x^2}=\begin{pmatrix}
+0&-2&-4\\0&0&-2\\1&2&4
+\end{pmatrix}
+\]
+with traces
+\[
+\Tr_A(x)=2,\qquad \Tr_A(x^2)=4
+\]
+and $\Tr_A(1)=\dim A=3$.
+
+\begin{flushright}
+\textit{Week 6, lecture 3 starts here}
+\end{flushright}
+
+\begin{example}
+$\F_3=\Z/(3)$ is a field of 3 elements.
+
+Note that $\Z/(9)$ is not a field since $3\cdot 3=0_{\Z/(9)}$. So how do we get a field of 9 elements? It is $\F_9=\F_3[x]/(f(x))$ where $f$ is monic, quadratic and irreducible, so that $1,x$ is a $\F_3$ basis of $\F_9$. Since $f(x)$ is of the form $x^2+\cdots$ and one needs $f(0),f(1),f(2)\neq 0$ for $f$ to be irreducible, so $f$ can only be $x^2+x+2$, $x^2+1$ or $x^2+2x+2$. The 9 elements of $\F_9$ can therefore be explicitly written down as: $0,1,2$, two roots of $x^2+x+2$, two roots of $x^2+1$, and two roots of $x^2+2x+2$.
+\end{example}
+
+\begin{lemma}
+\label{lemma:GcycifGsubgpofFu}
+If $\F$ is a field and $G\leq \F^\times$ with $|G|<\infty$, then $G$ is cyclic.
+\end{lemma}
+\begin{proof}
+Suppose $|G|=n$. By the fundamental theorem of finitely generated abelian groups, $G\cong C_{k_1}\times C_{k_2}\times\cdots\times C_{k_m}$ where $k_m\mid k_{m-1}\mid\cdots\mid k_1,\ k_m>1$, and $n=k_1\cdots k_m$. Then $\forall g\in G,\ g^{k_m}=1$, i.e. every $g\in G$ satisfies $f(g)=0$ where $f(x)=x^{k_m}-1$, so
+\[
+\prod_{g\in G}(x-g)\mid f(x)
+\]
+since $\F[x]$ is a UFD, so
+\[
+n=\deg \prod_{g\in G}(x-g)\leq k_m
+\]
+hence $m=1$.
+\end{proof}
+
+\begin{prop}
+Any finite field is isomorphic (as a ring) to $\F_p[x]/(f)$ where $p$ is prime and $f(x)\in\F_p[x]$ is irreducible.
+\end{prop}
+\begin{proof}
+Let $\F$ be a finite field. Consider $\varphi:\Z\rightarrow\F:n\mapsto n1_\F$. Note $\ker\varphi=(p)$ and so $\im\varphi=\Z/\ker\varphi=\F_p\leq\F$ by 1st isomorphism theorem. In particular, $\F$ is an $\F_p$ algebra. By \label{lemma:GcycifGsubgpofFu}, $\F^\times$ is cyclic, so let $z\in\F:\la z\ra=\F^\times$. One has a $\F_p$ algebra homomorphism $\psi:\F_p[x]\rightarrow \F:f(x)\mapsto f(z)$. Since powers of $z$ span $\F,\ \psi$ is surjective, so $\F\cong\F_p[x]/\ker\psi$, and since $\F_p[x]$ is a PID one can write $\ker\psi=(h)$. By \ref{coro:TFAErirredImaxRqIfield}, since $\F$ is a field, $h$ is irreducible.
+\end{proof}
+
+\textbf{Summary}:
+\begin{enumerate}
+\item For any prime power $q=p^n,\ \exists$ a field of size $q$
+\item Such field is unique up to isomorphism
+\item This field is $\F_p[x]/(f)$ where $\deg f=n$ but such $f$ is not unique
+\end{enumerate}
+
+\begin{prop}[Chinese remainder theorem for ${\F[x]}$]
+Write $f=h_1^{a_1}\cdots h_n^{a_n}\in\F[x]$ where $a_i\in\N$ and $h_i$ distinct irreducibles. Then $\F[x]/(f)\cong\F[x]/(h_1^{a_1})\times\cdots\times\F[x]/(h_n^{a_n})$.
+\end{prop}
+
+\begin{lemma}
+If $R$ is a division ring then
+\begin{enumerate}
+\item $Z(R)$ is a field
+\item $R$ is a vector space over $Z(R)$
+\item $(R,Z(R))$ is an algebra
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+\begin{enumerate}
+\item $Z(R)$ is a subring so it suffices to show it's division. Let $x\in Z(R)$, then $\exists x^{-1}\in R$, and for $y\in R$ one has $xy=yx$, so $yx^{-1}=x^{-1}xyx^{-1}=x^{-1}yxx^{-1}=x^{-1}y$, hence $x^{-1}\in Z(R)$.
+\item follows from 3.
+\item $\id:Z(R)\rightarrow Z(R)$ gives the algebra structure.
+\end{enumerate}
+\end{proof}
+
+\begin{coro}
+\label{coro:findivring}
+If $D$ is a finite division ring then
+\begin{enumerate}
+\item $Z(D)=\F_q$ for prime power $q$
+\item $n=\dim_\F D$ is finite
+\item $|D|=q^n$
+\end{enumerate}
+\end{coro}
+\begin{proof}
+\begin{enumerate}
+\item Note $Z(D)$ is a finite field
+\item since $D$ is finite
+\item \[
+|\F_q^n|=\left| \left\{ \begin{pmatrix}a_1\\ \vdots\\a_n\end{pmatrix}:a_i\in\F_q \right\} \right|=q^n.
+\]
+\end{enumerate}
+\end{proof}
+
+\begin{lemma}
+\label{lemma:CxofdivringisZDsubalgebra}
+If $D$ is a division ring then each centraliser $C(x)=\{a\in D:ax=xa\}$ is a $Z(D)$-subalgebra.
+\end{lemma}
+
+\begin{proof}
+First note $0,1\in C(x)$. Now if $a,b\in C(x)$ then $(a-b)x=ax-bx=xa-xb=x(a-b)$ and $abx=a(xb)=(xa)b$ so $ab,a-b\in C(x)$, hence $C(x)$ is a subring. Also $Z(D)\subseteq C(x)$ so $C(x)$ is closed under scalar multiplication by $\alpha\in Z(D)$. Finally if $a\in C(x)$ then $ax=xa\implies xa^{-1}=a^{-1}axa^{-1}=a^{-1}xaa^{-1}=a^{-1}x$, i.e. $a^{-1}\in C(x)$, hence $C(x)$ is division; so it is a $Z(D)$-subalgebra.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 7, lecture 1 starts here}
+\end{flushright}
+
+\subsubsection{Finite group action}
+
+Recall
+\begin{defn}
+One says a finite group $G$ \textit{acts} on a finite set $X$ if one can specify a map $G\times X\rightarrow X:(g,x)\mapsto {}^g x$ such that $^1x=x$ and ${}^{^g}{}^h x=^{gh} x$.
+
+For $x\in X$ one has the orbit of $x$: $\orb(x)={}^G x=\{^g x:g\in G\}$ and the stabiliser of $x$: $\stab(x)=G_x=\{g:{}^gx=x\}$.
+\end{defn}
+
+\begin{prop}[Orbit–Stabiliser formula]
+\label{prop:OSformula}
+\[
+|\orb(x)|=|G:\stab(x)|=\frac{|G|}{|\stab(x)|}.
+\]
+\end{prop}
+\begin{proof}
+There exists a bijection $\orb(x)\leftrightarrow G/\stab(x)$.
+\end{proof}
+
+\begin{prop}[Class equation I]
+Let $G$ act on $X$ and $x_1,\ldots,x_n$ representations of different orbits. Then
+\[
+|X|=\sum_{i=1}^n |\orb(x_i)|=\sum_{i=1}^n \frac{|G|}{|\stab(x_i)|}.
+\]
+\end{prop}
+\begin{proof}
+It follows from that $X=\orb(x_1)\sqcup\cdots\sqcup\orb(x_n)$ and \ref{prop:OSformula}.
+\end{proof}
+
+\begin{defn}
+The \textit{fixed point set} is $X^G:=\{x:{}^gx=x \ \forall g\}=\{x:|\orb(x)|=1\}$.
+\end{defn}
+
+\begin{coro}[Class equation II]
+\label{coro:CEII}
+Let $y_1,\ldots,y_k$ be representatives of orbits of size $\geq 2$, then
+\[
+|X|=|X^G|+\sum_{i=1}^n \frac{|G|}{|\stab(y_i)|}.
+\]
+\end{coro}
+
+We already know if $D$ is a finite division ring then $Z=Z(D)$ is a field of size $q=p^n$ where $p$ is prime and $|D|=q^m$ where $m=\dim_Z D$.
+
+Now consider $G=D^\times$ (so $|G|=q^m-1$) and let $G$ act on $D$ (called an \textit{inner automorphism}) by conjugation: $^g d=gdg^{-1}$. This is indeed an action: $^1 d=1d1^{-1}=d$ and ${}^{^g}{}^hd={}^g(hdh^{-1})=ghdh^{-1}g^{-1}=(gh)d(gh)^{-1}={}^{(gh)}d$,
+
+The stabiliser of $x$ is
+\[
+\stab(x)=\{g\in D^\times:gxg^{-1}=x\}=C(x)^\times
+\]
+and note that the fixed point set is $D^G=Z(D)=Z$.
+
+\begin{prop}
+\label{prop:qmisqplussum}
+In the notation above, $\exists d_1,\ldots,d_k\in\Z^+:d_i\mid m,d_i<m \ \forall i$ and
+\[
+q^m=q+\sum_{i=1}^k\frac{q^m-1}{q^{d_i}-1}.
+\]
+\end{prop}
+\begin{proof}
+If $m=1$ then $D=Z$ and we take $k=0$ (empty set of $d_i$'s). The desired is then a tautology: $q=q$.
+
+Now suppose $m>1$ and let $y_1,\ldots,y_k$ be representatives of $G$-orbits of size $\geq 2$. By \ref{coro:CEII},
+\[
+|D|=|D^G|+\sum_{i=1}^k\frac{|G|}{|\stab(y_i)|}
+\]
+and by previous observation, this implies
+\[
+q^m=q+\sum_{i=1}^k\frac{q^m-1}{|C(y_i)^\times|},
+\]
+where $C(y_i)$ is a division algebra over $Z$ by \ref{lemma:CxofdivringisZDsubalgebra}, hence $|C(y_i)|=q^{d_i}$ where $d_i\geq 1$. Also $|\orb(y_i)|\geq 2\implies C(y_i)\subsetneqq D\implies d_i<m$. Finally, since $D$ is a vector space over $C(y_i)$, define $C(y_i)\times D\rightarrow D:(a,b)\mapsto ab$ and let $a_i=\dim_{C(y_i)}D$, then
+\[
+|D|=|C(y_i)|^{a_i}\implies q^m=(q^{d_i})^{a_i}\implies d_ia_i=m,
+\]
+and in particular $d_i\mid m$.
+\end{proof}
+
+\begin{lemma}
+If $d\mid n$ then $(x^d-1)\mid(x^n-1)$ in $\Z[x]$.
+\end{lemma}
+\begin{proof}
+Write $z=x^d$, then
+\[
+\frac{x^n-1}{x^d-1}=\frac{z^{n/d}-1}{z-1}=z^{n/d-1}+z^{n/d-2}+\cdots+1.
+\]
+\end{proof}
+
+In $\C[x]$, let $\alpha_k=e^{\frac{2\pi k}{n}i}$ so that $\alpha_0,\ldots,\alpha_{n-1}$ are all $n$th roots of 1 and one can write
+\[
+x^n-1=(x-\alpha_0)\cdots(x-\alpha_{n-1}).
+\]
+
+\begin{lemma}
+Let $d_k=\gcd(n,k)$. Then
+\begin{enumerate}
+\item $|\alpha_k|=\frac{n}{d_k}$,
+\item $\alpha_k$ is $\frac{n}{d_k}$th primitive root of unity
+\item If $d_k=1$ then $\alpha_k$ is $n$th primitive root of unity
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+1 implies 2 which trivially implies 3, so let's prove 1.
+
+\[
+(\alpha_k)^{n/d_k}=\alpha_1^{\frac{kn}{d_k}}=(\alpha_1^n)^{\frac{k}{d_k}}=1,
+\] 
+so $|\alpha_k|\mid \frac{n}{d_k}$. Now suppose $|\alpha_k|=m<\frac{n}{d_k}$, then
+\[
+\alpha_k^m=1\implies \alpha_1^{km}=1\implies n\mid km\implies \frac{n}{d_k}\mid \frac{k}{d_k}m\implies \frac{n}{d_k}\mid m.
+\]
+So $|\alpha_k|=\frac{n}{d_k}$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 7, lecture 2 starts here}
+\end{flushright}
+
+\subsubsection{Cyclotomic polynomial}
+
+\begin{defn}[Cyclotomic polynomial]
+\[
+\phi_n(x)=\prod_{k=1,\gcd(k,n)=1}^n \left(x-\alpha^k\right)
+\]
+where $\alpha=e^{\frac{2\pi}{n}i}$.
+\end{defn}
+
+\begin{prop}
+\label{prop:xn-1isprodphidx}
+\[
+x^n-1=\prod_{d\mid n}\phi_d(x)\qquad\in\C[x].
+\]
+\end{prop}
+\begin{proof}
+$(x-\alpha^k)$ appears once in both sides since $x^n-1=\prod_{k=1}^n \left(x-\alpha^k\right)$ and $(x-\alpha^k)$ appears in $\phi_d(x)$ where $d=|\alpha^k|$ in $\C^\times$.
+\end{proof}
+
+\begin{example}
+If $p$ is prime then
+\[
+\phi_p(x)=\frac{x^p-1}{\phi_1(x)}=\frac{x^p-1}{x-1}=x^{p-1}+x^{p-2}+\cdots+1.
+\]
+\end{example}
+
+\begin{prop}
+$\phi_n(x)\in\Z[x]$ and is monic.
+\end{prop}
+\begin{proof}
+One proves by induction on $n$ using \ref{prop:xn-1isprodphidx}. If $n=1$ then $\phi_1(x)=x-1$ so done. Now suppose the statement is true for all values $<n$. Then
+\[
+x^n-1=\phi_n(x)\cdot \underbrace{\prod_{d\mid n,d<n} \phi_d(x)}_{:=f(x)}
+\]
+where $f(x)\in\Z[x]$ and is monic by inductive hypothesis. Now from the above one can write
+\[
+(x^n+\cdots)=(\alpha x^a+\cdots)(x^b+\cdots)
+\]
+so $x^n=\alpha x^{a+b}$ hence $\alpha=1$, i.e. monic. Now the division
+\[
+\phi_n(x)=\frac{x^n-1}{f(x)}
+\]
+can be thought of as the rewriting rule $x^b\leadsto x^b-f(x)\in\Z[x]_{\leq b-1}$ applied repeatedly to $x^n-1$. The fact that the result is $\in\Z[x]$ simply follows from that $x^b-f(x)$ is integer-valued.
+\end{proof}
+
+\subsubsection{Unabomber theorem}
+
+\begin{thm}
+A finite division ring is a field.
+\end{thm}
+\begin{proof}
+Suppose such $D$ is not a field. $Z(D)$ is a field, $|Z(D)|=q$ and $|D|=q^m$ where $m\geq 2$. Rewrite \ref{prop:qmisqplussum} as
+\[
+\tag{$\ast$}
+q-1=q^m-1+\sum_{i=1}^k\frac{q^m-1}{q^{d_i}-1}
+\]
+and consider $\phi_m(q)\in\Z$. Since $\phi_m(z)\mid z^m-1$ by \ref{prop:xn-1isprodphidx} one has $\phi_m(q)\mid q^m-1$. Also $\phi_m(z)\nmid z^{d_i}-1$ so $\phi_m(z)\mid\frac{z^m-1}{z^{d_i}-1}$, hence $\phi_m(q)\mid\frac{q^m-1}{q^{d_i}-1}$, i.e. $\phi_m(q)$ divides the RHS of $\ast$, so $\phi_m(q)\mid q-1$. Now
+\[
+\phi_m(q)=\prod_{k\mid m,\gcd(k,m)=1}\left(q-e^{\frac{2\pi k}{m}i}\right)
+\]
+but note that
+\[
+\left|q-e^{\frac{2\pi k}{m}i}\right|>|q-1| \ \forall k
+\]
+since $m\geq 2$, an absurdity.
+\end{proof}
+
+\subsection{Laurent series}
+\begin{defn}
+Given a ring $R$ one has new rings $R[x]\leq R[[x]]\leq R((x))$ where the last one is defined as
+\[
+R((x)):=\left\{ \sum_{k=N}^\infty a_k x^k \right\}
+\]
+where $N$ is allowed to be negative, called the \textit{Laurent series}. (The series infinite in both directions $R[[x,x^{-1}]]$ do not form a ring.)
+
+Addition is defined by
+\[
+\sum_{k=N}^\infty a_k x^k+\sum_{k=M}^\infty b_k x^k=\sum_{k=\min(N,M)}^\infty (a_k+b_k)x^k
+\]
+and multiplication is defined by
+\[
+ax^k\cdot bx^m=abx^{k+m}
+\]
+extended by ``infinite transitivity'':
+\[
+\sum_{k=N}^\infty a_k x^k \cdot \sum_{k=M}^\infty b_k x^k=\sum_{k=N+M}^\infty c_k x^k
+\]
+where
+\[
+c_k=\sum_{i+j=k}a_ib_j.
+\]
+\end{defn}
+
+Note that although $R[x][y]=R[y][x]$ naively, it's not true that $R((x))((y))=R((y))((x))$:
+\[
+\underbrace{\sum_{k=-\infty}^0 (x^{-k})(y^k)}_{\notin R((x))((y))}=\sum_{n=0}^\infty x^n y^{-n}=\underbrace{\sum_{n=0}^\infty (y^{-n})x^n}_{\in R((y))((x))}
+\]
+since you are not allowed to sum from $-\infty$.
+
+\begin{flushright}
+\textit{Week 7, lecture 3 starts here}
+\end{flushright}
+
+\begin{lemma}
+$t=a_nx^n+\cdots\in R((x))$ where $a_n\neq 0$ is invertible in $R((x))$ iff $a_n$ is invertible in $R$.
+\end{lemma}
+\begin{proof}[Proof]
+\begin{itemize}
+\item[$\Leftarrow$:] Write $t^{-1}=z_{-n}x^{-n}+z_{-n+1}x^{-n+1}+\cdots$ and solve $t\cdot t^{-1}=1$:
+\[
+\left\{\begin{aligned}
+a_n z_{-n}&=1\\
+a_n z_{-n+1}+a_{n+1}z_{-n}&=0\\
+a_n z_{-n+2}+a_{n+1}z_{-n+1}+a_{n+2}z_{-n}&=0\\
+&\vdots
+\end{aligned} \right.
+\]
+which can be solved recursively if $a_n^{-1}$ exists:
+\[
+\begin{aligned}
+z_{-n}&=a_n^{-1}\\
+z_{-n+1}&=-a_n^{-1}a_{n+1}z_{-n}=-a_n^{-1}a_{n+1}a_n^{-1}\\
+z_{-n+2}&=-a_n^{-1}a_{n+1}z_{-n+1}-a_n^{-1}a_{n+2}z_{-n}\\
+&=a_n^{-1}a_{n+1}a_n^{-1}a_{n+1}a_n^{-1}-a_n^{-1}a_{n+2}a_n^{-1} \\
+&\vdots
+\end{aligned}
+\]
+\end{itemize}
+\end{proof}
+
+\begin{coro}
+If $R$ is division then $R((x))$ is division.
+\end{coro}
+This gives us division algebras $\Hq((x)),\ \Hq((x))((y))$ and so on.
+
+Consider $\C((z,\sigma))$ which is equal to $\C((z))$ as abelian groups but with extra rule $z\alpha=\overline\alpha z$ where $\alpha\in\C$, i.e.
+\[
+\alpha z^n \cdot \beta z^m=\left\{ \begin{aligned}
+\alpha\beta z^{n+m}\qquad &n\text{ is even} \\ \alpha\overline\beta z^{n+m}\qquad &n\text{ is odd}
+\end{aligned} \right.
+\]
+extended by infinite transitivity. It's also a division ring. Note that
+\[
+Z(\Hq((x)))=\R((x)),\qquad Z(\C((z,\sigma)))=\R((z^2))
+\]
+which are isomorphic via $x\mapsto z^2$, but $\Hq((x))\not\cong \C((z,\sigma))$ as rings.
+
+\section{Semisimplicity}
+\subsection{Direct sum}
+\begin{defn}
+For $R$-modules $M_i,\ i\in I$, their \textit{direct product} is
+\[
+\bigsqcap M_i=\{(m_i):m_i\in M_i\}=\left\{f:I\rightarrow \bigcap M_i:f(i)\in M_i\right\}
+\]
+and their \textit{direct sum} is
+\[
+\bigoplus M_i=\left\{(m_i)\in \bigsqcap M_i:\text{for all but finitely many }i,\ m_i=0\right\}=\left\{f:I\rightarrow \bigcup M_i:|\supp(f)|<\infty\right\}
+\]
+where
+\[
+\supp(f)=\{i:f(i)\neq 0\}.
+\]
+
+It follows that if $\displaystyle |I|<\infty,\ \bigoplus_{i\in I} M_i=\bigsqcap_{i\in I} M_i$.
+\end{defn}
+
+\begin{example}
+Let $M_i=\R$ be a $\Q$-module and $I=\N$. Then
+\[
+\bigsqcap M_i=\{(a_0,a_1,\ldots)\} \qquad\text{all sequences}
+\]
+and
+\[
+\bigoplus M_i=\{(a_0,a_1,\ldots)\} \qquad\text{eventually 0 sequences, i.e. }\exists N:\forall n>N,\ a_n=0.
+\]
+\end{example}
+
+These are characterised as ``external'': producing new modules from existing ones. On the other hand, if $M$ is a $R$-module with $M_i<M,\ i\in I$, the question of when we can say $M$ is a direct sum of its submodules is characterised as an ``internal'' one. In this situation we have a homomorphism of $R$-modules:
+\[
+\begin{aligned}
+  \varphi:\bigoplus_{i\in I}M_i&\rightarrow M\\
+  (m_i)&\mapsto \sum_{i\in I} m_i
+\end{aligned}
+\]
+which is well defined since the sum $\sum_{i\in I}m_i$ is finite.
+
+\begin{defn}
+Define the \textit{sum} $\sum_{i\in I}M_i:=\im\varphi$ in the above notation.
+
+In particular, if $\varphi$ is surjective then $M=\sum_{i\in I}M_i$. If $\varphi$ is injective then $\bigoplus_{i\in I}M_i\cong\im\varphi$. In this case we identify $\sum M_i$ with $\bigoplus M_i$ and call $\sum M_i$ the \textit{internal direct sum}.
+
+If $\varphi$ is bijective then $\bigoplus M_i\cong M$. In this case $M$ is a direct sum of its submodules $M_i$.
+\end{defn}
+
+\subsubsection{Peirce decomposition}
+In this section we consider how to decompose $M$ into $M_1\oplus\cdots\oplus M_n$.
+
+\begin{example}
+Let $M=V$ be a 2-dimensional vector space over $\F$. How do we get $V=U\oplus W$? If we have we have 2 projection operators $p:V\rightarrow U\rightarrow V:u+w\mapsto u\mapsto u$ and $q:V\rightarrow W\rightarrow V:u+w\mapsto w\mapsto w$. Both $p,q\in\End_\F V$. Note that $p+q=\id_V=1_{\End_\F V},\ p^2=p,\ q^2=q$ and $pq=qp=0$. This is a system of orthogonal idempotents.
+
+Claim: idempotents $e\in\End_\F V$ are projection operators.
+
+Indeed, $e^2-e=0\implies \mu_e(x)\mid x(x-1)\implies e$ is diagonalisable with $1,0$ on the diagonal $\implies$ one can let $V$ be the 1-eigenspace of $e$ (i.e. $\im e$) and $W$ be the 0-eigenspace (i.e. $\ker e$).
+
+Therefore, in the previous example, $U=\im p=\ker q$ and $W=\ker p=\im q$.
+\end{example}
+
+\begin{flushright}
+\textit{Week 8, lecture 1 starts here}
+\end{flushright}
+
+Let's define properly.
+
+\begin{defn}
+$R\ni e$ is \textit{idempotent} if $e^2=e$.
+
+Idempotent $e,f$ are \textit{orthogonal} if $ef=fe=0$.
+
+$e_1,\ldots,e_n$ is a \textit{full system of orthogonal idempotents} if $\left\{\begin{aligned}
+\forall i,\ e_i^2&=e_i \\
+\forall i\neq j,\ e_ie_j=e_je_i&=0 \\
+e_1+\cdots+e_n&=1
+\end{aligned}\right..$
+\end{defn}
+\begin{example}
+\begin{enumerate}
+\item For $R=R_1\times\cdots\times R_n, e_i:=(0,\ldots,\underbrace{1}_{i\text{th position}},\ldots,0)$ form such system.
+\item If $e\in R$ is idempotent than $f=1-e$ is as well since $f^2=(1-e)^2=1-2e+e^2=1-e=f$, and $ef=e(1-e)=0$ and $fe=0$, so $e,f$ form such system. 
+\end{enumerate}
+\end{example}
+
+\begin{prop}
+\label{prop:bijbetdecompandfullsys}
+If $M$ is a $R$-module then there is a bijection between
+\[
+\{\text{decompositions of }R\text{-modules }M=M_1\oplus M_2\oplus\cdots\oplus M_n\text{ with all }M_i\neq 0\}
+\]
+and
+\[
+\{\text{full systems of orthogonal idempotents in }\End_R M\}.
+\]
+These are called Peirce decompositions.
+\end{prop}
+\begin{proof}
+\begin{itemize}
+\item[1$\rightarrow$2] Define $e_i:M\twoheadrightarrow M_i\hookrightarrow M$, i.e. $m=\begin{pmatrix}
+  m_1\\ \vdots \\ m_n
+\end{pmatrix}\mapsto \begin{pmatrix}
+  0\\ \vdots \\ m_i \\ \vdots \\ 0
+\end{pmatrix}$. Then it's trivial that
+\begin{enumerate}[label=\roman*.]
+\item $e_i\in \End_R M$
+\item $e_i^2=e_i$
+\item $e_ie_j=0$ for $i\neq j$
+\item $e_1+\cdots +e_n=1_{\End_R M}$
+\end{enumerate}
+\item[2$\rightarrow$1] Define $M_i=\im e_i=Me_i$. Since $e_i$ is a homomorphism of $R$-modules, $\im e_i$ is a submodule. It remains to check $\psi:\bigoplus_{i=1}^n M_i\rightarrow M$ is bijective:
+\begin{enumerate}[label=\roman*.]
+\item $\psi$ is surjective: let $m\in M$ so that $me_i\in M_i$, and
+\[
+\begin{pmatrix}
+me_1\\ \vdots \\ me_n
+\end{pmatrix}\xmapsto{\psi} me_1+\cdots+me_n=m(e_1+\cdots+e_n)=m1=m
+\]
+\item $\psi$ is injective: let $x=\begin{pmatrix}
+m_1e_1\\ \vdots \\ m_ne_n
+\end{pmatrix}\in\ker\psi$, then $0=\psi(x)=m_1e_1+\cdots+m_ne_n$. Multiplying this by $e_i$ gives
+\[
+0=m_1e_1e_i+\cdots+m_ne_ne_i=m_ie_i
+\]
+by orthogonality, hence $x=0$.
+\end{enumerate}
+\end{itemize}
+Finally, they are inverse bijections by construction.
+\end{proof}
+
+\subsubsection{Primary decomposition (example of Peirce decomposition)}
+Let $A$ be an abelian group under $+$ such that $\exists N:\forall x\in A,\ |x|<N$, i.e. order of an element is bounded. Let $n=\lcm\{|x|:x\in A\}$. Note that $A$ is a $\Z$-module with
+\[
+E=\End_\Z A\geq \Z/(n)=\{x\mapsto kx\}
+\]
+where $k$ is the natural image of quotient map $\Z\rightarrow \Z/(n)$. Now if one decomposes $n$ into $p_1^{a_1}\cdots p_k^{a_k}$ where $p_i$ are distinct primes, then Chinese remainder theorem gives
+\[
+\Z/(n)\cong \Z/(p_1^{a_1})\times\cdots\times\Z/(p_k^{a_k})\leq E
+\]
+which gives a full system of orthogonal idempotents
+\[
+e_i=(0,\ldots,1+(p_i^{a_i}),\ldots,0)\in E
+\]
+and the Peirce decomposition of the group
+\[
+A=Ae_1\oplus\cdots\oplus Ae_k,
+\]
+called the \textit{primary decomposition}.
+\begin{claim}
+$Ae_i=\{x\in A:|x|=p_i^{b_i}\text{ where }b_i\leq a_i\}$.
+\end{claim}
+\begin{proof}
+\begin{itemize}
+\item[$\subseteq:$] Write $x=ye_i$ and note that $p_i^{a_i}x=p_i^{a_i}ye_i=y(p_i^{a_i}e_i)=y0_E=0$, so $|x|\mid p_i^{a_i}$.
+\item[$\supseteq:$] Write $x=x1_E=xe_1+\cdots+xe_k$ and note that
+\[
+\tag{$\ast$}
+0=p_i^{b_i}x=p_i^{b_i}xe_1+\cdots+p_i^{b_i}xe_k,
+\]
+since $|xe_j|=p_j^{b_j}$, one has for $j\neq i,\ xe_j\neq 0\implies p_i^{b_i}xe_j\neq 0$, i.e.
+\[
+\text{for }j\neq i,\ p_i^{b_i}xe_j=0\implies xe_j= 0.
+\]
+But $\ast$ is a direct sum decomposition, so all $p_i^{b_i}e_j=0$, hence $xe_j=0 \ \forall j\neq i$, therefore $x=xe_i\in Ae_i$. 
+\end{itemize}
+\end{proof}
+
+\begin{flushright}
+\textit{Week 8, lecture 2 starts here}
+\end{flushright}
+
+\subsubsection{Primary decomposition on a vector space}
+\label{subsubsection:primdecomponvs}
+Let $V$ be a finite dimensional vector space over $\F$ and $T:V\rightarrow V$ a linear operator. Suppose $\chi_T(z)=\pm (z-\alpha_1)\cdots (z-\alpha_n)$ with $\alpha_i\in\F$. Consider the minimal polynomial $\mu_T(z)=(z-\beta_1)^{a_1}\cdots(z-\beta_k)^{a_k}$ with $i\neq j\implies \beta_i\neq \beta_j$ and $a_i\geq 1$. Let $R=\F[x]$ so that $V$ is a left $R$-module via $x\cdot v=T(v)$. We then have a homomorphism $\varphi:\F[x]\rightarrow\End_R V:x\mapsto(v\mapsto T(v))$ with $\ker\varphi=(\mu_T(z))$. Therefore by 1st isomorphism and Chinese remainder theorems
+\[
+\im\varphi\cong \F[z]/(\mu_T(z))\cong \F[z]/((z-\beta_1)^{a_1})\times\cdots\times\F[z]/((z-\beta_k)^{a_k})
+\]
+and one gets a full system of orthogonal idempotents $e_1,\ldots,e_k\in\End_RV$ where
+\[
+e_i=(0,\ldots,1+((z-\beta_i)^{a_i}), \ldots,0)
+\]
+with a corresponding Peirce decomposition
+\[
+V=Ve_1\oplus\cdots\oplus Ve_k,
+\]
+called the \textit{primary decomposition} of $V$ with respect to $T$. See Dmitriy's notes for a proof of
+\[
+Ve_i=\{v\in V:\exists a\geq 1:(T-\beta_i)^a(v)=0\},
+\]
+where the right hand side is called the \textit{generalised eigenspace} with eigenvalue $\beta_i$. This implies generalised eigenvectors for distinct eigenvalues are linearly independent.
+
+\subsubsection{Peirce decomposition and matrix}
+Let $R$ be any ring. One has $\End_RR\cong R$ (\ref{lemma:EndRRisoR}) and submodules of $_RR$ are left ideals. One therefore has
+
+\begin{prop}[\ref{prop:bijbetdecompandfullsys} where $M=R$]
+There is a bijection between
+\[
+\{\text{full systems of orthogonal idempotents in }R\}
+\]
+and
+\[
+\{\text{decompositions }R=L_1\oplus\cdots\oplus L_n\}
+\]
+where $L_i$ are left ideals.
+\end{prop}
+
+Now for a full system $e_1,\ldots,e_r\in R$ and $_RM$ a left $R$-module, one can write
+\[
+M=\bigoplus_{i=1}^n e_iM=\begin{pmatrix}
+e_1M\\e_2M\\ \vdots \\e_nM
+\end{pmatrix}
+\]
+and with $R$ itself one has
+\[
+R=\bigoplus_{i,j=1}^n e_iRe_j=\begin{pmatrix}
+e_1Re_1 & \cdots & e_1Re_n \\
+\vdots & e_iRe_j & \vdots \\
+e_nRe_1 & \cdots & e_nRe_n
+\end{pmatrix}
+\]
+where $e_iRe_j$ are distinct abelian groups. This is called the \textit{double Peirce decomposition}.
+
+\begin{thm}
+\begin{enumerate}
+\item If $R$ is a $\F$-algebra, all $e_iRe_j$ and $e_iM$ are vector spaces over $\F$.
+\item Each $e_iRe_i$ is a nonzero ring.
+\item $e_iM$ is a $e_iRe_i$-module.
+\item Multiplication in $R$ and $R$-action on $M$ satisfy standard ``matrix rules'':
+\[
+\begin{pmatrix}
+r_{11} & \cdots & r_{1n} \\
+\vdots & & \vdots \\
+r_{n1} & \cdots & r_{nn}
+\end{pmatrix}\begin{pmatrix}
+s_{11} & \cdots & s_{1n} \\
+\vdots & & \vdots \\
+s_{n1} & \cdots & s_{nn}
+\end{pmatrix}=\left(\sum_R r_{iR}s_{Rj}\right)
+\]
+where $r_{ij},s_{ij}\in e_iRe_j$, and
+\[
+\begin{pmatrix}
+r_{11} & \cdots & r_{1n} \\
+\vdots & & \vdots \\
+r_{n1} & \cdots & r_{nn}
+\end{pmatrix}\begin{pmatrix}
+m_1\\ \vdots \\ m_n
+\end{pmatrix}=\left(\sum_{i=1}^n r_{ik}m_k\right).
+\]
+\end{enumerate}
+\end{thm}
+\begin{proof}
+\begin{enumerate}
+\item Let $\alpha\in\F,\ x\in e_iRe_j$. Then one can write $x=e_iye_j$ with $y\in R$, and
+\[
+\alpha x=\alpha e_i y e_j=e_i(\alpha y)e_j\in e_iRe_j,
+\]
+so $e_iRe_j$ is a $\F$-vector subspace. Similar for $e_iM$.
+\item Note $(e_ixe_i)(e_iye_i)=e_i(xe_iy)e_i\in e_iRe_i$, so it's closed under product. Also $1_{e_iRe_i}=e_i\neq 0$, so nonzero ring (but not a subring or $R$).
+\item One has\[
+(e_ire_i)e_im=e_i(re_im)\in e_iM,\quad \text{and}\quad 1_{e_iRe_i}e_im=e_i^2m=e_im
+\]
+\item By definition,
+\[
+(r_{ij})(s_{ij})=\left(\sum r_{ij}\right)\left(\sum s_{ij}\right)=\sum_{i,j,k,m}r_{ij}s_{km}
+\]
+where
+\[
+r_{ij}s_{km}=e_ire_je_kse_m=\left\{\begin{aligned}
+  &0 &\text{ if }j\neq k\\
+  &e_ire_jse_m &\text{ if }j=k
+\end{aligned}  \right.,
+\]
+so
+\[
+\sum_{i,j,k,m}r_{ij}s_{km}=\sum_{i,j,m}r_{ij}s_{jm}=\sum_{i,m}\left(\sum_j r_{ij}s_{jm}\right).
+\]
+Similar for $R\times M\rightarrow M$.
+\end{enumerate}
+\end{proof}
+
+\begin{flushright}
+\textit{Week 8, lecture 3 starts here}
+\end{flushright}
+
+\begin{lemma}
+\label{lemma:eRfisoHomReRf}
+Let $e,f,g\in R$ be 3 idempotents.
+\begin{enumerate}
+\item $eRf\cong\Hom_R(Re,Rf)$ as abelian groups.
+\item This $\cong$ commutes with compositors, i.e.
+\[
+\xymatrix{
+  \alpha, \beta\ar@{|->}[r] &\alpha\beta \\
+  \Hom_R(Re,Rf)\times \Hom_R(Rf,Rg) \ar[r] \ar@{}[d]|{\cong} & \Hom_R(Re,Rg)\ar@{}[d]|{\cong} \\
+  eRf\times fRg\ar[r] & eRg \\
+  a,b\ar@{|->}[r] & ab
+}
+\]
+is commutative.
+\end{enumerate}
+\end{lemma}
+This is a generalisation of the ring isomorphism $\End_RR\cong R$ (which is the special case $e=f=1$).
+\begin{proof}
+\begin{enumerate}
+\item Consider homomorphism of abelian groups
+\[
+\begin{aligned}
+\psi:eRf&\rightarrow \Hom(Re,Rf)\\
+exf&\mapsto (se\mapsto sexf).
+\end{aligned}
+\]
+This is
+\begin{itemize}
+\item[injective:] let $exf\in\ker\psi$, then $e\psi(exf)=e^2xf=exf=0$.
+\item[surjective:] consider $\varphi:Re\rightarrow Rf$. Then
+\[
+\varphi(re)=\varphi(re^2)=\varphi((re)e)=re\varphi(e)
+\]
+and
+\[
+\varphi(e)=\varphi(e^2)=e\varphi(e)
+\]
+so $\varphi(e)=eRf$ and $\psi(\varphi(e))=\varphi$.
+\end{itemize}
+\item Let $(a,b)\in eRf\times fRg$ and write $a=exf$. Then $a=e^2xf^2=e(exf)f=eaf$ and similarly $b=fbg$. So one can see
+\[
+\xymatrix{
+  (\alpha:x\mapsto xeaf,\beta:y\mapsto yfbg)\ar@{|->}[r] & \alpha\beta:x\mapsto xeafbg \\
+  (eaf,fbg)\ar@{|->}[r]\ar[u]^\cong & eafbg.\ar[u]^\cong
+}
+\]
+\end{enumerate} 
+\end{proof}
+
+\subsection{Semisimple module}
+\begin{defn}
+$M$ is \textit{semisimple} if $M$ is a direct sum of simple (sub-)modules.
+\end{defn}
+\begin{remark}
+\begin{enumerate}
+\item The sum is not necessarily finite.
+\item The sum can be empty. This gives a zero module, which is semisimple.
+\item If $R=\F$ is a field then $_\F \F$ is the only simple left $R$-module, and since every vector space has a basis, every $R$-module is semisimple.
+\item If $R=\F[x]$, then a simple $R$-module is $R/L$ where $L$ is a maximal left ideal by \ref{lemma:LmaxiffRLsimple}, and we know $L$ is of the form $(f(x))$ where $f$ is irreducible. In particular, if $\F$ is algebraically closed, then all simple modules have the form $R/(x-\alpha)$, i.e. 1-dimensional.
+\item In the case of the considered object in section \ref{subsubsection:primdecomponvs}, $V$ as a $R$-module is semisimple iff $T$ is diagonalisable.
+\end{enumerate}
+\end{remark}
+
+\begin{defn}
+For $_RM$, the \textit{socle} of $M$ is
+\[
+\soc M:=\sum_{S\leq M,\ S\text{ is simple}} S.
+\]
+\end{defn}
+\begin{example}
+Consider an abelian group $A$ as a $\Z$-module. The simple $\Z$-modules are $\Z/(p)$ where $p$ is prime, and the simple submodules of $A$ are $\{\Z x:x\in A,\ |x|=p,\ p\text{ prime}\}$, so
+\[
+\soc A=\sum_{|x|\text{ is prime}}\Z x=\{x\in A:|x|\text{ is square free}\}.
+\]
+\end{example}
+
+\begin{example}
+Let $\F$ be an algebraically closed field and $V$ a $\F[x]$-module. Simple submodules are then $\{\F v:v\text{ is an eigenvector of }T\}$ and $\soc V=\spa\{\text{eigenvectors}\}$.
+\end{example}
+
+\begin{lemma}
+\label{lemma:MsemisimpiffMissocM}
+\begin{enumerate}
+\item $M$ is semisimple iff $M=\soc M$.
+\item More precisely, if $M=\sum_{i\in I}S_i$ where $S_i$ are all simple, then $\exists J\subseteq I:M=\bigoplus_{i\in J} S_i$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+\begin{enumerate}
+\item \begin{itemize}
+\item[$\Rightarrow$:] trivial since
+\[
+M=\bigoplus_{i\in X,\ L_i\text{ simple}} L_i \implies \soc M\supseteq \sum L_i=M.
+\]
+\item[$\Leftarrow$:] follows from 2.
+\end{itemize}
+\item Consider the poset $\mathcal P:=\{J\subseteq I:\sum_{i\in J}S_i=\bigoplus_{i\in J}S_i\}$ under $\subseteq$. Since $\varnothing\in\mathcal P$, one has $\mathcal P\neq\varnothing$ and so can apply Zorn's lemma. Consider the chain $\mathcal C:J_1\subseteq J_2\subseteq\cdots\subseteq J_\infty\subseteq\cdots$ in $\mathcal P$ and define $Y=\bigcup_{J\in \mathcal C}J$. It's clear that once $Y\in\mathcal P$, it is an upper bound of $\mathcal C$ and thus by Zorn's $\mathcal P$ has a maximal element $J$. Examine the map
+\[
+\begin{aligned}
+\varphi_Y:\bigoplus_{i\in Y} S_i&\rightarrow \sum_{i\in Y} S_i\\
+(s_i)&\mapsto \sum s_i
+\end{aligned}
+\]
+which is clearly surjective, and it's injective iff $\sum_{i\in Y} S_i$ is direct iff $Y\in\mathcal P$. Let $x\in\ker\varphi$, and write $x=(x_1,x_2,\ldots,x_n,0,\ldots,0)$. Then $1,2,\ldots,n\in Y$, and since there are only finitely many positions, $\exists J\in\mathcal C:1,\ldots,n\in J$. But $\varphi_J$ is an isomorphism by construction, so $x_1=\cdots=x_n=0$, hence $x=0$.
+
+\begin{flushright}
+\textit{Week 9, lecture 1 starts here}
+\end{flushright}
+
+\begin{remark}
+If $V$ is a $\F$-vector space, then there exists a basis $\{e_i:i\in I\}$ which gives a decomposition into 1-dimensional subspaces $_\F V=\bigoplus_{i\in I} \F e_i$. Now note that $\F e_i\cong {}_\F \F$: this leads to the idea of a free module. Also, $\F e_i$ is simple, so this also leads to the idea of semisimple module. The proof of \ref{lemma:MsemisimpiffMissocM} now proceeds.
+\end{remark}
+
+Now let $N=\sum_{i\in J}S_i=\bigoplus_{i\in J}S_i$ where $J$ is the maximal element the argument above yields. If $N=M$ then we are done. If not, $\exists 0\in I:S_0\not\subseteq N$ (so $0\notin J$) and since $S_0$ is simple one has $S_0\cap N=\{0\}$. Let $\widehat J:=J\cup\{0\}$. Consider $\psi:\bigoplus_{i\in\widehat J}S_i\rightarrow \sum_{i\in \widehat J} S_i=S_0+N$ and let $x\in\ker\psi$. Write $x=(x_0,x_1,\ldots,x_n,0,\ldots,0)$ where $x_0\in S_0$. Then $0=\psi(x)=x_0+\cdots+x_n$ so $x_0=-(x_1+x_2+\cdots+x_n)\in S_0\cap N=\{0\}$, hence $x_0=x_1+\cdots+x_n=0$. But $\sum_{i\in J}S_i=\bigoplus_{i\in J}S_i$, so $x_1=\cdots=x_n=0$. Therefore $\psi$ is injective and hence an isomorphism, and thus $\widehat J\in\mathcal P$, which contradicts maximality of $J$.
+\end{enumerate}
+\end{proof}
+
+\begin{coro}
+\label{coro:quoofsemisimpissemisimp}
+A quotient module of a semisimple module is semisimple.
+\end{coro}
+\begin{proof}
+Suppose $M$ is semisimple and write $M=\bigoplus_{i\in I}S_i$. For a submodule $N\leq M$, consider $M/N$ and the quotient map $\varphi:M\rightarrow M/N$. Then $M/N=\sum_{i\in I}\varphi(S_i)$, and since $S_i$ is simple, $\varphi(S_i)=S_i$ or 0, so
+\[
+M/N=\sum_{i\in I,\ \varphi(S_i)=S_i}\varphi(S_i)
+\]
+and by \ref{lemma:MsemisimpiffMissocM} one has $M/N$ is semisimple.
+\end{proof}
+Comparing with quotient modules, submodules are harder: e.g. $\R^2=\R e_1\oplus \R e_2=\bigoplus_{i\in I} S_i$, but $\R\begin{pmatrix}1\\1\end{pmatrix}\neq\bigoplus_{i\in J}S_i$ for any $J\subseteq I$. We need something more.
+
+\begin{defn}
+$_RM$ is \textit{completely reducible} if $\forall N\leq M,\ \exists K\leq M:{}_RM={}_RN\oplus{}_RK$. Such $K$ is the \textit{direct complement} to $N$.
+\end{defn}
+\begin{lemma}
+If $N\leq M$, then any direct complement $K$ is isomorphic to $M/N$ as modules.
+\end{lemma}
+\begin{proof}
+Consider quotient map $\varphi:M\rightarrow M/N$ and restrict to $K$: $\varphi|_K:K\rightarrow M/N$, which is injective since if $x\in\ker\varphi|_K\subseteq\ker\varphi=N$ then $x\in N\cap K=\{0\}$ and surjective since if $m+N\in M/N$ then $m=n+k$ where $n\in N,k\in K$, so $\varphi|_K(k)=\varphi|_K(m-n)=m-n+N=m+N$.
+\end{proof}
+
+\begin{lemma}
+\label{lemma:subofcrmodiscr}
+A submodule of a completely reducible module is completely reducible.
+\end{lemma}
+\begin{proof}
+Let $N\leq M$ with $M$ being completely reducible and let $K\leq N$. We need to find a direct complement for $K$. By assumption $M=K\oplus P$ for some $P$. Consider $\pi:M\rightarrow K$, projection along $P$. This induces a restriction $\widehat\pi:=\pi|_N:N\rightarrow K$ with $\im \widehat\pi\subseteq \im\pi= K$, but $\pi(k)=k \ \forall k\in K$ so $K\subseteq\im\widehat\pi$, hence $\im\widehat\pi=K$ and by the 1st isomorphism theorem one can write $N=\im\widehat\pi\oplus\ker\widehat\pi=K\oplus\ker\widehat\pi$ where $\ker\widehat\pi$ is the direct complement we are looking for.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 9, lecture 2 starts here}
+\end{flushright}
+
+\begin{lemma}
+\label{lemma:crmodhassimpsub}
+A nonzero completely reducible module contains a simple submodule.
+\end{lemma}
+\begin{proof}
+Let $M$ be such a $R$-module and $x\in M$ with $x\neq 0$. Consider homomorphism
+\[
+\begin{aligned}
+\varphi_x:{}_RR&\rightarrow M\\
+r&\mapsto rx
+\end{aligned}
+\]
+and note that $Rx\cong R/\Ann(x)\leq M$ by remark before \ref{lemma:MisoRAnnx}, so $Rx$ is completely reducible by \ref{lemma:subofcrmodiscr}. Now $\Ann(x)\subseteq L$, the maximal left ideal, so one can consider the surjection
+\[
+\begin{aligned}
+\psi:Rx&\twoheadrightarrow R/L\\
+r+\Ann(x)&\mapsto r+L
+\end{aligned}
+\]
+where $R/L$ is simple by \ref{lemma:LmaxiffRLsimple}. Let $P$ be the direct complement of $\ker\psi\leq Rx$, i.e. $Rx=\ker\psi\oplus P$. But $Rx=\ker\psi\oplus\im\psi$ where $\im\psi=R/L$, so $P$ is simple. 
+\end{proof}
+
+\begin{thm}
+\label{thm:semisimpequivcompred}
+$M$ is semisimple iff $M$ is completely reducible.
+\end{thm}
+\begin{proof}
+\begin{enumerate}
+\item[$\Leftarrow$:] By \ref{lemma:crmodhassimpsub} one has $\soc M\neq 0$. If $M=\soc M$ we are done, so suppose $M\neq\soc M$, then $\exists P\leq M:M=\soc M\oplus P$ with $P\neq 0$. But $P$ is completely reducible, so again by \ref{lemma:crmodhassimpsub} there is a simple $S\leq P$, but this means $S\not\subseteq\soc M$, an absurdity.
+\item[$\Rightarrow:$] Write $M=\bigoplus_{i\in I}S_i\geq N$ and we need a direct complement for $N$. Consider quotient map $\varphi:M\rightarrow M/N$. Since $S_i$ is simple,
+\[
+\varphi(S_i)\cong S_i/(S_i\cap N)=\left\{\begin{aligned}
+  0\\\cong S_i
+\end{aligned} \right.,
+\]
+so
+\[
+M/N=\sum_{i\in I,\ \varphi(S_i)\neq 0}\varphi(S_i),
+\]
+and by \ref{lemma:MsemisimpiffMissocM} one has $\exists J\subseteq I:M/N=\bigoplus_{i\in J}\varphi(S_i)$ and $\varphi(S_i)\cong S_i$ for $i\in J$. Then
+\[
+M=N\oplus \left(\sum_{i\in J}S_i\right).
+\]
+Indeed, consider
+\[
+\psi:N\oplus \left(\sum_{i\in J}S_i\right)\rightarrow M.
+\]
+$\psi$ is surjective: let $m\in M$ then $M/N\ni m+N=\varphi(m)=\varphi(x_1)+\cdots+\varphi(x_n)$ where $x_i\in S_i,i\in J$, so
+\[
+m-x_1-\ldots-x_n\in N
+\]
+and hence
+\[
+m=y+x_1+\cdots+x_n\in\im\psi
+\]
+for some $y\in N$.
+
+$\psi$ is injective: let $(m,x_1+\cdots+x_n)\in\ker\psi$ where $m\in N,x_i\in S_i,i\in J$, then
+\[
+m+x_1+\cdots+x_n=0
+\]
+and so
+\[
+\varphi(x_1)+\cdots+\varphi(x_n)=0
+\]
+since $\varphi(m)=0$, which follows from that $\sum_{i\in J}\varphi(s_i)$ is direct, so $x_1=\cdots=x_n=0$ and hence $m=0$ and therefore $(m,x_1+\cdots+x_n)=0$.
+\end{enumerate}
+\end{proof}
+
+\begin{coro}
+\label{coro:subofsemisimpissemisimp}
+A submodule of a semisimple module is semisimple.
+\end{coro}
+
+\subsubsection{Radical}
+\begin{defn}
+A submodule $P$ of $M$ is \textit{cosimple} if $M/P$ is simple.
+
+The \textit{radical} of $M$ is
+\[
+\rad M:=\bigcap_{P\leq M,\ P\text{ is cosimple}} P.
+\]
+\end{defn}
+
+Recall for $M/N$ one has the bijective correspondence
+\[
+\{P\leq M:P\supseteq N\} \leftrightarrow \{Q\leq M/N\},
+\]
+and for $M/N$ to be simple it means both sets only have two elements, $N,M$ and $0,M/N$, so $N$ is maximal.
+
+\begin{example}
+$_\Z \Z$ has no simple submodules, and the simple $\Z$-modules are $\Z/(p)$ where $p$ is prime, so
+\[
+\soc\Z=\sum_\varnothing=0
+\]
+and
+\[
+\rad\Z=\bigcap_{p}\Z/(p)=\{n:p\mid n \ \forall p\}=0.
+\]
+\end{example}
+
+\begin{example}
+Consider $M=\Z/(n)$ and $R=\Z$. For $n\in\N$, recall we also had a definition for radical of $n$: $\rad n=p_1\cdots p_k$ with $n=p_1^{a_1}\cdots p_k^{a_k}$ where $a_i\geq 1$ and $p_i$ are primes, e.g.
+\[
+\rad 12000=\rad 3\times 2^5\times 5^3=3\times 2\times 5=30.
+\]
+A submodule $Rx$ of $M$ is simple when $|x|=p_i$, so $x=\frac{n}{p_i}$ and
+\[
+\soc M=\Z \frac{n}{p_1}+\cdots+\Z \frac{n}{p_k}=\Z\frac{n}{p_1\cdots p_k}=\Z\frac{n}{\rad n},
+\]
+which also gives
+\[
+\soc M\cong \Z/(p_1)\oplus\cdots\oplus\Z/(p_k)\cong\Z/(\rad n),
+\]
+and by \ref{lemma:MsemisimpiffMissocM} $M$ is semisimple iff $n=\rad n$, i.e. $n$ is squarefree.
+
+Similarly, a submodule $Rx$ is cosimple if $M/Rx\cong \Z/(p_i)$, where an obvious choice for $x$ is $p_i$, and
+\[
+\rad M=\bigcap_{p_i}\Z(p_i+(n))=\{x\in M:\forall i,\ p_i\mid x\}=\Z p_1\cdots p_k=\Z\rad n,
+\]
+so $M/\rad M\cong \Z/(\rad n)\cong\soc M$, which is semisimple. This implies if $\rad M=0$ then $M$ is semisimple. Let's see this in more generality.
+\end{example}
+
+\begin{lemma}
+\label{lemma:MsemisimpthenradMis0}
+If $M$ is semisimple then $\rad M=0$.
+\end{lemma}
+\begin{proof}
+Write $M=\bigoplus_{i\in I}S_i$. For $i$, let
+\[
+P_i:=\bigoplus_{k\in I\backslash\{i\}}S_k,
+\]
+so that $M/P_i\cong S_i$ is simple, i.e. $P_i$ is cosimple. But then $\rad M\subseteq \bigcap_i P_i=0$.
+\end{proof}
+
+\begin{defn}
+$_RM$ is \textit{artinian} if any descending chain of submodules terminates, i.e. for any chain $P_1\geq P_2\geq\cdots\geq P_k\geq\cdots, \exists N:P_N=P_{N+1}=\cdots$.
+
+A ring is \textit{left artinian} if $_RR$ is artinian.
+\end{defn}
+
+\begin{thm}
+If $_RM$ is artinian then $M$ is semisimple iff $\rad M=0$.
+\end{thm}
+
+\begin{flushright}
+\textit{Week 9, lecture 3 starts here}
+\end{flushright}
+
+\begin{proof}
+By \ref{lemma:MsemisimpthenradMis0}, it remains to prove the $\Rightarrow$ direction. Since $\rad M=0,\ \exists$ cosimple submodules
+\[
+P_1,\ldots,P_n,\ldots: P_1\cap\cdots\cap P_n\cap\cdots=\rad M=0.
+\]
+This induces a descending chain
+\[
+P_1\supseteq P_1\cap P_2\supseteq P_1\cap P_2\cap P_3\supseteq\cdots
+\]
+which, by assumption, must terminate at some $P_1\cap\cdots\cap P_n=0$. Consider
+\[
+\begin{aligned}
+\psi:M&\rightarrow \underbrace{M/P_1\oplus\cdots\oplus M/P_n}_{\text{semisimple}}\\
+m&\mapsto (m+P_1,\ldots,m+P_n),
+\end{aligned}
+\]
+whose kernel is precisely $P_1\cap\cdots\cap P_n=0$, hence $\psi$ is injective and $M$ is a submodule of $M/P_1\oplus\cdots\oplus M/P_n$, therefore $M$ is semisimple by \ref{coro:subofsemisimpissemisimp}.
+\end{proof}
+
+We are finally strong enough.
+\subsection{Semisimple ring}
+\subsubsection{Artin–Wedderburn theorem}
+\begin{thm}[Artin–Wedderburn]
+\label{thm:artinWedderburn}
+The following are equivalent for a ring $R$.
+\begin{enumerate}
+\item Every left $R$-module is semisimple.
+\item $_R R$ is semisimple.
+\item $\exists$ division rings $D_1,\ldots,D_k:R\cong M_{n_1}(D_1)\times\cdots\times M_{n_k}(D_k)$.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+\begin{itemize}
+\item[1$\Rightarrow$2:] trivial.
+\item[2$\Rightarrow$1:] Let $_RM$ be a left $R$-module and $X\subseteq M$ a generating set. Consider
+\[
+\begin{aligned}
+\varphi:\overbrace{\bigoplus_X{}_RR}^{\text{semisimple}} &\rightarrow M\\
+(a_i)_{i\in X}&\mapsto \sum_{i\in X}a_i i,
+\end{aligned}
+\]
+so $M$ is a quotient of a semisimple module, hence by \ref{coro:quoofsemisimpissemisimp} $M$ is semisimple.
+\item[3$\Rightarrow$2:] Note that $D_i^{n_i}$ is a simple $R$-module, since $M_{n_i}(D_i)$ acts on it by matrix multiplication, so that every nonzero vector can be mapped to another. Now
+\[
+M_{n_i}(D_i)=\underbrace{\begin{pmatrix}
+\ast & 0 & \cdots & 0 \\
+\ast & 0 & \cdots & 0\\
+\vdots & \vdots & \cdots & \vdots\\
+\ast & 0 & \cdots & 0
+\end{pmatrix}}_{\cong D_i^{n_i}}\oplus\underbrace{\begin{pmatrix}
+0 & \ast & \cdots & 0 \\
+0 & \ast & \cdots & 0\\
+\vdots & \vdots & \cdots & 0\\
+0 & \ast & \cdots & 0
+\end{pmatrix}}_{\cong D_i^{n_i}}\oplus\cdots\cong \left(D_i^{n_i}\right)^{n_i}
+\]
+so $_RM_{n_i}(D_i)$ is semisimple, hence $_RR$ is semisimple as well.
+\item[2$\Rightarrow$3:] Write $_RR=\bigoplus_{i\in I}S_i$ where $S_i$ is simple. Then
+\[
+1_R=x_1+\cdots+x_n\qquad x_i\in S_i,\text{all }x_i\neq 0
+\]
+(note that $n$ is finite) and any $r\in R$ can be written as
+\[
+r=r1=rx_1+\cdots+rx_n,
+\]
+so effectively $_RR=S_1\oplus\cdots\oplus S_n$. Therefore $\exists$ idempotents $e_1,\ldots,e_n\in\End_RR\cong R$ yielding this decomposition, i.e. $S_i=Re_i$. We now change the order:
+\[
+\begin{aligned}
+_RR=&S_1\oplus\cdots\oplus S_{a_1}\oplus\\
+&S_{a_1+1}\oplus\cdots\oplus S_{a_1+a_2}\oplus\\
+&\quad \vdots \\
+&S_{a_1+\cdots+a_{k-1}+1}\oplus\cdots\oplus S_{a_1+\cdots+a_k}
+\end{aligned}
+\]
+so that every module in a line are isomorphic and modules in different lines are not. Now apply double Peirce decomposition
+\[
+R=\bigoplus_{i,j=1}^n e_iRe_j
+\]
+and let $D_i:=\End S_i$, which is a division ring by \ref{coro:schurlem2}, and by \ref{lemma:eRfisoHomReRf}
+\[
+e_iRe_j\cong\Hom(Re_i,Re_j)=\left\{
+\begin{aligned}
+0&\qquad \text{if }i,j\text{ are in different lines}\\
+D_i\psi_{i,j}&\qquad \text{if }i,j\text{ are in the same line}
+\end{aligned}
+\right.
+\]
+for some fixed isomorphism $\psi_{i,j}$ by construction, and hence
+\[
+R=\begin{pmatrix}[c|c|c|c|c]
+D_1 & 0 & 0 & \cdots & 0 \\\hline
+0 & D_2 & 0 & \cdots & 0\\\hline
+0 & 0 & \ddots & 
+\end{pmatrix}\cong M_{n_1}(D_1)\times\cdots\times M_{n_k}(D_k).
+\]
+\end{itemize}
+\end{proof}
+Note that the 3rd statement does not mention any sides but 1st and 2nd are left. The corollary is then
+\begin{coro}
+\label{coro:lrsemisimpequiv}
+$_RR$ is semisimple iff $R_R$ is semisimple. In this case one says the ring $R$ is \textit{semisimple}.
+\end{coro}
+
+\subsubsection{Semisimple algebra}
+If $(R,\F)$ is an algebra and a semisimple ring, then $R=M_{n_1}(D_1)\times\cdots\times M_{n_k}(D_k)$ where all $D_i$ are $\F$-algebras. Our knowledge so far (recall \ref{prop:CisonlyfindimdivalgoverC}, \ref{thm:countableFrobenius}, \ref{coro:findivring}) allows us to write the following.
+\begin{prop}
+\label{prop:coroAWforRCandFq}
+\begin{enumerate}
+\item A countable dimensional semisimple $\C$-algebra is isomorphic to
+\[
+\prod_{i=1}^k M_{n_i}(\C).
+\]
+\item A countable dimensional semisimple $\R$-algebra is isomorphic to
+\[
+\prod_{i=1}^k M_{n_i}(D_i) \qquad \text{where } D_i\in\{\R,\C,\Hq\}.
+\]
+\item A finite dimensional semisimple $\F_q$-algebra is isomorphic to
+\[
+\prod_{i=1}^k M_{n_i} \left(\F_{q^{a_i}}\right).
+\]
+\end{enumerate}
+\end{prop}
+
+\subsubsection{Maschke's theorem}
+Let $G$ be a group and $\F$ a field of characteristic $p$. Define the group algebra
+\[
+\F G:=\left\{\sum_{g\in G}\alpha_g g:\alpha_g\in\F\right\} \qquad\text{with multiplication }\alpha g\beta h:=\alpha\beta gh
+\]
+
+\begin{thm}
+The following are equivalent for a group $G$ and a field $\F$ of characteristic $p$.
+\begin{enumerate}
+\item $\F G$ is semisimple.
+\item $G$ is finite and $p\nmid |G|$.
+\end{enumerate}
+\end{thm}
+\begin{remark}
+2$\Rightarrow$1 is called Maschke's theorem.
+\end{remark}
+\begin{proof}
+\begin{itemize}
+\item[1$\Rightarrow$2:] Let $R=\F G$. Consider $\F$ as a trivial $R$-module with $\forall\alpha\in\F,\ g\alpha=\alpha \ \forall g\in G$. So $\exists$ surjective homomorphism
+\[
+\begin{aligned}
+\psi:{}_RR&\rightarrow\F\\
+g&\mapsto 1
+\end{aligned}
+\]
+Since $R$ is semisimple and $\ker\psi\leq{}_RR$, one has $_RR=\ker\psi\oplus P$ for some $P$ and hence $_RP\cong{}_R\F$. So $\exists x\in P:P=\F x$. Write $x=\sum_{g\in G}\alpha_g g$. Since $P\cong\F,\ hx=x\ \forall h\in G$, i.e.
+\[
+\sum_{g\in G}\alpha_g hg=\sum_{g\in G}\alpha_g g\qquad\forall h\in G,
+\]
+it follows that all $\alpha_g$ are equal and $\neq 0$. Therefore $G$ has to be finite because if it's not then $x=\sum_{g\in G}\alpha g$ which is not well defined. Now suppose $|G|=n$ and $p\mid n$, then $x\in\F G$ and $\psi(x)=n\alpha=0$, i.e. $x\in\ker\psi$, a contradiction to the direct sum.
+
+\begin{flushright}
+\textit{Week 10, lecture 1 starts here}
+\end{flushright}
+
+\item[2$\Rightarrow$1:] We will show every $\F G$-module is completely reducible and then apply \ref{thm:semisimpequivcompred}, \ref{thm:artinWedderburn} and \ref{coro:lrsemisimpequiv}. Let $_{\F G}M>{}_{\F G}N$ and the goal is to find a direct complement for $N$. One can write $M=N\oplus K$ as $\F$-vector spaces. Consider the corresponding projection $p:M\twoheadrightarrow N\hookrightarrow M$ which is idempotent. Let $\alpha\in\F$ satisfy $|G|\alpha=1_\F$ (one can think of $\alpha$ as $\frac{1}{|G|}$). Define $\widehat p\in\End_\F M$ by $x\mapsto \alpha\sum_{g\in G}g(p(g^{-1}x))$. Since $N$ is a submodule, $\im\widehat p\subseteq N$. Now for any $x\in N,\ g^{-1}x\in N$ and so
+\[
+\widehat p(x)=\alpha\sum_{g\in G} g(p(g^{-1}x))=\alpha\sum_{g\in G} g(g^{-1}x)=\alpha|G|x=x,
+\]
+so $\im\widehat p=N$ and $\widehat p^2=\widehat p$, i.e. $\widehat p$ is idempotent. Moreover, for $g\in G$ and $y\in M$,
+\[
+\begin{aligned}
+\widehat p(gy)&=\alpha\sum_{h\in G} h(p(h^{-1}gy))=\alpha\sum_{k_1,k_2\in G:k_1k_2=g} k_1(p(k_2y))\\
+&=\alpha\sum_{h\in G} gh(p(h^{-1}y))=g\widehat p(y),
+\end{aligned}
+\]
+so $\widehat p\in\End_RM$, hence one can write $M=\im\widehat p\oplus\ker\widehat p=N\oplus\ker\widehat p$, where $\ker\widehat p$ is the direct complement we are looking for.
+\end{itemize}
+\end{proof}
+
+\begin{example}
+Consider $\F C_n$ where $C_n=\la x\mid x^n=1\ra$, which can be written as $\F[y]/(y^n-1)$. If one writes $y^n-1=f_1^{a_1}\cdots f_1^{a_1}$ where $f_i\in\F[y]$ are irreducible and $a_i\geq 1$, then using Chinese remainder theorem one has
+\[
+\F C_n\cong \F[y]/(f_1^{a_1})\times\cdots\times \F[y]/(f_n^{a_n}),
+\]
+which is semisimple iff
+\[
+\begin{aligned}
+&\qquad\quad a_1=\cdots=a_n=1\\
+&\iff z^n-1\text{ has no multiple factors} \\
+&\iff \gcd ((z^n-1),(z^n-1)'')=1\\
+&\iff p\nmid n,
+\end{aligned}
+\]
+which is what Maschke's theorem tells us as well.
+
+If $\F=\C$ then
+\[
+z^n-1=\prod_{k=0}^{n-1}\left(z-e^{\frac{2\pi k}{n}i}\right)
+\]
+so
+\[
+\C C_n\cong\prod_{k=0}^{n-1}\C[z]/\left(z-e^{\frac{2\pi k}{n}i}\right)\cong \C^n.
+\]
+
+If $\F=\Q$ then $z^n-1=\prod_{d\mid n}\phi_d(z)$ where $\phi_d$ is the cyclotomic polynomial. So
+\[
+\Q C_n\cong \prod_{d\mid n}\Q[z]/(\phi_d)\cong\prod_{d\mid n}\Q\left(\sqrt[d]{1}\right).
+\]
+\end{example}
+
+\begin{example}
+Consider $\R Q_8$ where $Q_8=\{\pm 1,\pm i,\pm j,\pm k\}\leq\Hq^\times$. \ref{prop:coroAWforRCandFq}.2 applies. Now note that for each Artin–Wedderburn factor $M_n(\F)$ there is a different surjective $\R$-algebra homomorphism $\R Q_8\rightarrow M_n(\F)$ given by projection
+\[
+\begin{aligned}
+\eta:\R Q_8&\twoheadrightarrow\Hq\\
+\pm i&\mapsto\pm i\\
+\pm j&\mapsto\pm j
+\end{aligned}
+\]
+or
+\[
+\begin{aligned}
+\theta_{\epsilon,\delta}:\R Q_8&\twoheadrightarrow\R\\
+i&\mapsto\epsilon\\
+j&\mapsto\delta
+\end{aligned}
+\]
+where $\epsilon,\delta\in\{\pm 1\}$. Since there can be $2\times 2=4$ different $\theta_{\epsilon,\delta}$ and just one $\eta$, we conclude
+\[
+\R Q_8\cong\R\times\R\times\R\times\R\times\Hq.
+\]
+\end{example}
+
+\begin{prop}
+If
+\[
+_RM=\bigoplus_{i=1}^n S_i=\bigoplus_{j=1}^m N_j
+\]
+where $S_i,N_j$ are simple, then $n=m$ and $\exists\sigma\in \text{Sym}_n:S_i\cong N_{\sigma(j)}$.
+\end{prop}
+\begin{proof}
+We prove by induction on $n$. If $n=0$ then $M=0$ so $m=0=n$. If $n=1$ then $M=S_1$ is simple so $m=1$ and $S_1=N_1$. Now suppose the statement is true for values $\leq n-1$ and consider projection $\pi:M\twoheadrightarrow S_n$ along $\bigoplus_{i=1}^{n-1}S_i$. Then
+\[
+S_n=\pi(M)=\sum_{j=1}^m \pi(N_j) \qquad\text{where }\pi(N_j)\text{ is either 0 or } N_j
+\]
+but $S_n$ is simple, so it has to be that $S_n\cong N_{j_0}$ for some $j_0\in\{1,\ldots,m\}$. One then has that $\bigoplus_{j\neq j_0} N_j$ is a direct complement of $S_n$, so
+\[
+\bigoplus_{j\neq j_0}N_j\cong\bigoplus_{i=1}^{n-1}S_i
+\]
+and by inductive hypothesis, $n-1=m-1$, so $n=m$; and $\exists\widehat\delta\in\text{Sym}_{n-1}:S_i\cong N_{\widehat\delta(i)}$. Together with $S_n\cong N_{j_0}$ this completes the proof.
+\end{proof}
+
+\begin{coro}
+For a semisimple ring $R\cong\prod M_{a_i}(D_i)$, the division rings $D_i$ and $a_i$ are unique up to permutation.
+\end{coro}
+
+\subsection{Jacobson radical}
+\begin{defn}
+$x\in R$ is \textit{nilpotent} of $\exists n:x^n=0$, \textit{quasiregular} if $1+x$ is invertible.
+\end{defn}
+\begin{example}
+Let $\F$ is a field and $x\in M_n(\F)$, then $x$ is nilpotent iff 0 is the only eigenvalue, and quasiregular iff $-1$ is not an eigenvalue of $x$. In particular, nilpotent implies quasiregular in this case.
+\end{example}
+
+\begin{flushright}
+\textit{Week 10, lecture 2 starts here}
+\end{flushright}
+
+\begin{notation}
+$J(R)=\rad{}_RR$.
+\end{notation}
+\begin{defn}
+An ideal $I$ is \textit{nilpotent} if $\exists n:I^n=0$, \textit{nil} if every $x\in I$ is nilpotent and \textit{quasiregular} if every $x\in I$ is quasiregular.
+\end{defn}
+\begin{lemma}
+Nilpotent ideals $\subseteq$ nil ideals $\subseteq$ quasiregular ideals.
+\end{lemma}
+\begin{proof}
+That nilpotent ideals $\subseteq$ nil ideals is obvious ($\exists n:I^n=0$ means $\exists n:$ any product of $n$ elements of $I$ is 0).
+
+It remains to show that a nilpotent element is quasiregular, but
+\[
+x^n=0\implies (1+x)(1-x+x^2-\cdots+(-1)^{n-1}x^{n-1})=1.
+\]
+\end{proof}
+
+\begin{example}
+$R=\C[[x]]\leq\C((x))$. Set $J:=(x)=\{\alpha_1 x+\cdots+\alpha_n x^n+\cdots\}$. Then $J$ is quasiregular: write
+\[
+J\ni z=\alpha_n x^n+\cdots\qquad\text{where }a_n\neq 0,\ n\geq 1
+\]
+then
+\[
+(1+z)^{-1}=\sum_{k=0}^\infty (-1)^k z^k.
+\]
+$J$ is also maximal since $R/J\cong \C$, a field. We will later see that this implies $J=J(R)$.
+
+Note that $J$ is not nil; in fact $R$ is a domain.
+\end{example}
+
+\begin{example}
+$S=\C[x_1,x_2,\ldots],\ I=(x_1^2,x_2^2,\ldots),\ R=S/I,\ \overline{x_i}=x_i+I,\ J=(\overline{x_1},\overline{x_2},\ldots)$. Then $J$ is trivially nil, so quasiregular. Again $R/J\cong\C$ so $J$ is maximal, hence $J=J(R)$.
+
+Note that $J$ is not nilpotent since $\overline{x_1}\overline{x_2}\cdots\overline{x_n}\neq 0$.
+\end{example}
+
+\begin{prop}
+If $I,J\unlhd R$ and $I^n=J^m=0$, then $(I+J)^{n+m}=0$. In particular, the sum of two nilpotent ideals is nilpotent.
+\end{prop}
+\begin{proof}
+$(I+J)^a$ is the $\R$-span of elements of the form
+\[
+\prod_{i=1}^a(x_i+y_i)=\prod_{i=1}^a x_i+\text{terms with }y_i
+\]
+where $x_i\in I,\ y_i\in J$, hence $(I+J)^a\subseteq I^a+J$, and so
+\[
+(I+J)^{n+m}=((I+J)^n)^m\subseteq (I^n+J)^m\subseteq J^m=0.
+\]
+\end{proof}
+
+\begin{conj}[Köthe]
+If $I,J\unlhd^l R$ and $I,J$ are nil, then $I+J$ is nil.
+\end{conj}
+
+\begin{thm}
+\label{thm:J1-7eq}
+For a ring $R$, $J_1=\cdots=J_7$ where
+\begin{itemize}
+\item $J_1=\rad{}_RR$
+\item $J_2=\rad R_R$
+\item $\displaystyle J_3=\bigcap_{L\unlhd^l_{\text{max}}R} L$
+\item $\displaystyle J_4=\bigcap_{I\unlhd^r_{\text{max}}R} I$
+\item $J_5=\{x\in R:\forall\text{ simple }_RM,\ xM=0\}$
+\item $J_6=\{x\in R:\forall\text{ simple }M_R,\ xM=0\}$
+\item $J_7$ is the largest 2-sided quasiregular ideal
+\end{itemize}
+\end{thm}
+
+\begin{flushright}
+\textit{Week 10, lecture 3 starts here}
+\end{flushright}
+
+\begin{proof}
+\begin{enumerate}
+\item $J_1\subseteq J_5$: let $x\in J_1$ and $_RM$ a simple left $R$-module. $\forall m\in M,\ \Ann_R(m)$ is maximal, so $x\in\Ann_R(m)$, hence $xm=0\implies xM=0\implies x\in J_5$.
+\item $J_5\subseteq J_3$: let $x\in J_5$ and $L\unlhd^l_{\text{max}}R$. Then $R/L$ is a simple $R$-module, so $xR/L=0$ and in particular $x(1+L)=0+L$, so $x\in L$ and hence $x\in J_3$.
+\item $J_3$ is quasiregular: let $x\in J_3$. Note that $R(1+x)=R$, since if $R(1+x)\neq R$, then $\exists L\unlhd^l_{\text{max}}R$ which contains $R(1+x)$ and in particular $1+x\in L$ and since $\displaystyle x\in\bigcap_{L\unlhd^l_{\text{max}}R} L$ one has $x\in L$ as well, therefore $1\in L$ and so $L=R$, a contradiction. Hence $1+x$ has a left inverse $1+z$, and
+\[
+\begin{aligned}
+(1+z)(1+x)&=1 \\
+z+x+zx&=0\\
+z=-(1+z)x\in J_3
+\end{aligned}
+\]
+so $z$ also has a left inverse. Denote it $t$, then
+\[
+t=t1=t(1+z)(1+x)=1+x
+\]
+so
+\[
+1=t(1+z)=(1+x)(1+z),
+\]
+hence $1+z$ is also the right inverse of $1+x$.
+\item $J_1$ contains every left quasiregular ideal: suppose $\exists I\unlhd_{\text{quasiregular}}^l R:I\not\subseteq J_1$, so $\exists L\unlhd_{\text{max}}^l R$ and $x\in I:x\notin L$. This implies $L+Rx=R$ and in particular $a+bx=1$ for some $a\in L,b\in R$. Since $-bx\in I$ which is quasiregular, $a=1-bx$ has a left inverse $t$, but then $1=ta\in L$ so $L=R$, a contradiction. 
+\item $J_5$ is a 2-sided ideal: we already know $J_5$ is a left ideal. Now pick $x\in J_5,\ r\in R$ and let $_RM$ be a simple left $R$-module. Then $(xr)M\subseteq x(rM)\subseteq xM=0$, so $xr\in J_5$ and hence $J_5$ is also a right ideal.
+\end{enumerate}
+The 5 steps prove $J_1=J_3=J_5=J_7$. The proof for $J_2=J_4=J_6=J_7$ is analogous.
+\end{proof}
+
+\begin{remark}
+\begin{enumerate}
+\item Radical property: $J(R/J(R))=0$. The philosophy is: radical is the bad stuff we can get rid off.
+\item A ring $R$ with $J(R)=0$ are also called semisimple in literature. This watershed between classical semisimplicity and Jacobson semisimplicity is presented in the following proposition.
+\end{enumerate}
+\end{remark}
+
+\begin{prop}
+The following are equivalent.
+\begin{enumerate}
+\item $R$ is semisimple.
+\item $R$ is left artinian and $J(R)=0$.
+\end{enumerate}
+\end{prop}
+
+\begin{thm}
+\label{thm:artinRhasnilpJR}
+If $R$ is left artinian then $J(R)$ is nilpotent.
+\end{thm}
+\begin{proof}
+Denote $J=J(R)$. Consider descending chain
+\[
+J\supseteq J^2\supseteq\cdots\supseteq J^n\supseteq\cdots
+\]
+since $R$ is artinian, $\exists n:J^n=J^{n+1}=\cdots$. We claim $J^n=0$. Let
+\[
+I=\Ann_R(J^n_R)=\{x\in R:J^nx=0\}.
+\]
+Note that $I$ is a 2-sided ideal: let $x\in I,y\in R$, then $J^nxy\subseteq 0y\subseteq 0$ and $J^nyx\subseteq J^nx=0$, so $xy,yx\in I$. If $I\supseteq J^n$ then we are done since $J^n=J^{2n}=J^nJ^n\subseteq J^n I=0$ by construction, so suppose $I\not\supsetneq J^n$ and consider quotient homomorphism $\psi:R\rightarrow R/I=:S$. Then $\psi(J^n)\neq 0$. Since $J^n\subseteq J=J(R)$, (see HW4 P4) $\psi(J^n)\subseteq \psi(J)\subseteq J(S)$. Since $R$ is artinian, so is $S$, hence $\exists L\unlhd_{\text{min}}^l S:L\subseteq\psi(J^n)$. Then $L$ is a simple $S$-module, so $\psi(J^n)L\subseteq J(S)L=0$ by \ref{thm:J1-7eq}. Apply $\psi^{-1}$ and one has $J^n\psi^{-1}(L)\subseteq I$, and
+\[
+J^n\psi^{-1}(L)=J^{2n}\psi^{-1}(L)=J^n(J^n\psi^{-1}(L))\subseteq J^nI=0,
+\]
+so $\psi^{-1}L\subseteq I$ and hence $L=0$, a contradiction.
+\end{proof}
+
+\begin{coro}
+For a left artinian ring $R,\ J(R)$ is the largest nilpotent 2-sided/left/right ideal of $R$.
+\end{coro}
+\begin{proof}
+$R$ being nilpotent follows from \ref{thm:artinRhasnilpJR}. Let $I\lhd R$ be nilpotent. Then it's quasiregular so $I\subseteq J(R)$ by \ref{thm:J1-7eq}.
+
+Now let $L\lhd^l R$ with $L^n=0$, then $LR\unlhd R$ and $(LR)^n=L(RL)^{n-1}R\subseteq L^nR=0$, so by above $L\subseteq LR\subseteq J(R)$. Similar for right.
+\end{proof}
+\end{document}
