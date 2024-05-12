@@ -13,32 +13,27 @@
 \usepackage{stmaryrd}
 \usepackage{float}
 \usepackage{enumitem}
-%\usepackage[full]{textcomp}
-%\usepackage{garamondx}
-%\usepackage[scaled=1.01]{zlmtt}
-%\usepackage{sourcesanspro}
-%\usepackage[garamondx,cmbraces]{newtxmath}
-%\useosf
+
 \makeatletter
-\providecommand{\bigsqcap}{%
-  \mathop{%
+\providecommand{\bigsqcap}{
+  \mathop{
     \mathpalette\@updown\bigsqcup
-  }%
+  }
 }
-\newcommand*{\@updown}[2]{%
-  \rotatebox[origin=c]{180}{$\m@th#1#2$}%
+\newcommand*{\@updown}[2]{
+  \rotatebox[origin=c]{180}{$\m@th#1#2$}
 }
 \makeatother
 \makeatletter
-\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{
   \hskip -\arraycolsep
   \let\@ifnextchar\new@ifnextchar
   \array{#1}}
 \makeatother
 \makeatletter
 \DeclareRobustCommand{\pns}{\mathrel{\text{$\m@th\proper@ideal$}}}
-\newcommand{\proper@ideal}{%
-  \ooalign{$\lneq$\cr\raise.22ex\hbox{$\lhd$}\cr}%
+\newcommand{\proper@ideal}{
+  \ooalign{$\lneq$\cr\raise.22ex\hbox{$\lhd$}\cr}
 }
 \makeatother
 
@@ -1204,7 +1199,7 @@ Rotations in 4D can be understood by identifying $\R^4\cong\Hq$. For $x\in U(\Hq
 \begin{thm}
 \[
 \begin{aligned}
-\varphi:U(\Hq)\times&\rightarrow SO(\Hq)\cong SO_4(\R)\\
+\varphi:U(\Hq)\times U(\Hq)&\rightarrow SO(\Hq)\cong SO_4(\R)\\
 (x,y)&\mapsto L_xR_{y^{-1}}
 \end{aligned}
 \]
